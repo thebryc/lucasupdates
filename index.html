@@ -1260,10 +1260,258 @@
     <h2 class="section-title">Staffing notes</h2>
 
     <div class="staff-content" id="staffUnlocked">
-      <div class="info-card" style="border-left: 4px solid var(--gold);">
-        <span class="tag tag-ops">Staffing</span>
-        <p style="font-size: 14px; color: var(--text-secondary); font-style: italic;">[ Staffing notes will be added here before Lucas's return. ]</p>
+
+      <style>
+        .oc-toolbar{display:flex;align-items:center;gap:6px;padding:0 0 10px;flex-wrap:wrap;}
+        .oc-toolbar-note{font-size:11px;color:var(--gray-mid);flex:1;}
+        .oc-sbtn{font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--gray-border);background:var(--white);color:var(--text-primary);cursor:pointer;}
+        .oc-sbtn:hover{background:var(--green-wash);}
+        .oc-sbtn.active{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
+        #oc-canvas{position:relative;width:100%;height:820px;background:var(--gray-bg);border-radius:12px;border:1px solid var(--gray-border);overflow:hidden;margin:10px 0;}
+        .pc{position:absolute;width:110px;background:var(--white);border:1px solid rgba(0,0,0,0.13);border-radius:9px;padding:7px 5px 5px;cursor:grab;text-align:center;user-select:none;}
+        .pc:hover{border-color:rgba(0,0,0,0.3);}
+        .pc.dragging{cursor:grabbing;opacity:.85;z-index:100;}
+        .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin:0 auto 4px;position:relative;}
+        .av .ndot{position:absolute;width:9px;height:9px;border-radius:50%;background:#ff6b35;border:2px solid #fff;bottom:0;right:0;display:none;}
+        .av .nring{position:absolute;inset:-3px;border-radius:50%;border:2px solid #fff;display:none;}
+        .pc.hasnote .av .ndot{display:block;}
+        .pc.hasnote .av .nring{display:block;}
+        .pname{font-size:10.5px;font-weight:700;color:var(--text-primary);line-height:1.2;margin-bottom:1px;}
+        .ptitle{font-size:9px;color:var(--gray-mid);line-height:1.3;margin-bottom:3px;}
+        .pnights{font-size:8.5px;border-radius:3px;padding:1px 4px;margin-bottom:3px;display:inline-block;}
+        .edbtn{font-size:9px;padding:2px 5px;width:100%;border-radius:4px;border:0.5px solid var(--gray-border);background:var(--gray-bg);color:var(--text-secondary);cursor:pointer;}
+        .edbtn:hover{background:var(--green-wash);color:var(--green-deep);}
+        svg#oc-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+        #oc-modal-bg{display:none;position:absolute;inset:0;background:rgba(0,0,0,0.35);z-index:200;align-items:center;justify-content:center;}
+        #oc-modal-bg.open{display:flex;}
+        #oc-modal{background:var(--white);border-radius:12px;border:1px solid var(--gray-border);padding:18px;width:260px;}
+        #oc-modal h3{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--green-deep);}
+        #oc-modal label{font-size:10px;color:var(--gray-mid);display:block;margin:8px 0 3px;text-transform:uppercase;letter-spacing:0.05em;}
+        #oc-modal input,#oc-modal textarea{width:100%;font-size:12px;border:1px solid var(--gray-border);border-radius:6px;padding:5px 7px;background:var(--gray-bg);color:var(--text-primary);font-family:inherit;}
+        #oc-modal textarea{height:72px;resize:vertical;}
+        #oc-modal-acts{display:flex;gap:8px;margin-top:12px;}
+        #oc-modal-acts button{flex:1;font-size:12px;padding:6px;border-radius:6px;border:1px solid var(--gray-border);background:var(--gray-bg);color:var(--text-primary);cursor:pointer;}
+        #oc-save{background:var(--green-deep)!important;color:#fff!important;border-color:var(--green-deep)!important;}
+        .oc-legend{display:flex;flex-wrap:wrap;gap:8px;font-size:10px;color:var(--gray-mid);padding:6px 0 12px;}
+        .ll{display:flex;align-items:center;gap:4px;}
+        .lc{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+      </style>
+
+      <div class="oc-toolbar">
+        <span class="oc-toolbar-note">Drag to reorganize · Edit to add notes · Orange dot = has note</span>
+        <button class="oc-sbtn active" onclick="ocScenario(1,this)">Scenario 1</button>
+        <button class="oc-sbtn" onclick="ocScenario(2,this)">Scenario 2</button>
+        <button class="oc-sbtn" onclick="ocScenario(3,this)">Scenario 3</button>
+        <button class="oc-sbtn" onclick="ocScenario(4,this)">Scenario 4</button>
+        <button class="oc-sbtn" onclick="ocReset()">Reset layout</button>
       </div>
+
+      <div class="oc-legend">
+        <div class="ll"><div style="width:22px;height:2px;background:#061b17;flex-shrink:0;"></div> Direct report</div>
+        <div class="ll"><div style="width:22px;height:0;border-top:2px dashed #80bbaf;flex-shrink:0;"></div> Dotted line</div>
+        <div class="ll"><div class="lc" style="background:#eb2627;"></div> Recruitment</div>
+        <div class="ll"><div class="lc" style="background:#f0c917;border:1px solid #ccc;"></div> Learning</div>
+        <div class="ll"><div class="lc" style="background:#e06326;"></div> ACT</div>
+        <div class="ll"><div class="lc" style="background:#00adad;"></div> Seniors</div>
+        <div class="ll"><div class="lc" style="background:#2a6465;"></div> Advising</div>
+        <div class="ll"><div class="lc" style="background:#393086;"></div> Persistence</div>
+        <div class="ll"><div class="lc" style="background:#ed125f;"></div> Community</div>
+        <div class="ll"><div class="lc" style="background:#00775f;"></div> Development</div>
+        <div class="ll"><div class="lc" style="background:#094d9e;"></div> Ops</div>
+        <div class="ll"><div class="lc" style="background:#061b17;"></div> Exec</div>
+      </div>
+
+      <div id="oc-canvas">
+        <svg id="oc-svg"></svg>
+        <div id="oc-modal-bg">
+          <div id="oc-modal">
+            <h3 id="oc-mname">Edit</h3>
+            <label>Title</label>
+            <input id="oc-mtitle" type="text"/>
+            <label>Notes</label>
+            <textarea id="oc-mnotes" placeholder="Add thoughts..."></textarea>
+            <div id="oc-modal-acts">
+              <button onclick="ocCloseModal()">Cancel</button>
+              <button id="oc-save" onclick="ocSaveModal()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px;color:var(--gray-light);margin-top:4px;font-style:italic;">Scenario 1: No ISACT, no Brei · Scenario 2: No ISACT, Brei returns as Dir. of Instructional Excellence · Scenario 3: ISACT continues, no Brei · Scenario 4: ISACT continues, Brei returns</p>
+
+      <script>
+      (function(){
+        var SK='bryc_orgv4';
+        var TC={exec:'#061b17',dev:'#00775f',learning:'#f0c917',act:'#e06326',seniors:'#00adad',advising:'#2a6465',persistence:'#393086',community:'#ed125f',recruitment:'#eb2627',ops:'#094d9e'};
+        var P=[
+          {id:'lucas',n:'Lucas S.',t:'Executive Director',tm:'exec',x:360,y:16,s:[1,2,3,4]},
+          {id:'josh',n:'Josh',t:'Chief of Staff',tm:'exec',x:180,y:110,s:[1,2,3,4]},
+          {id:'elin',n:'Elin',t:'Chief of Product',tm:'exec',x:360,y:110,s:[1,2,3,4]},
+          {id:'myeisha',n:'Myeisha',t:'Deputy Chief of Staff',tm:'exec',x:540,y:110,s:[1,2,3,4]},
+          {id:'alyson',n:'Alyson',t:'Director of Development',tm:'dev',x:680,y:110,s:[1,2,3,4]},
+          {id:'marcus',n:'Marcus',t:'Director of Operations',tm:'ops',x:20,y:215,s:[1,2,3,4]},
+          {id:'forrest',n:'Forrest',t:'Dir. of Fellow Recruitment',tm:'recruitment',x:140,y:215,s:[1,2,3,4]},
+          {id:'angela',n:'Angela',t:'Community Engagement Mgr',tm:'community',x:260,y:215,s:[1,2,3,4]},
+          {id:'alexis',n:'Alexis',t:'Persistence Manager',tm:'persistence',x:390,y:215,s:[1,2,3,4]},
+          {id:'open_p',n:'Open',t:'Persistence (Title TBD)',tm:'persistence',x:510,y:215,s:[1,2,3,4]},
+          {id:'chasity',n:'Chasity',t:'Director of Programs',tm:'learning',nt:'0–1 night/wk',x:140,y:320,s:[1,2,3,4]},
+          {id:'aareena',n:'Aareena',t:'Director of ACT',tm:'act',nt:'Backup only',x:260,y:320,s:[1,2]},
+          {id:'aareena_i',n:'Aareena',t:'Dir. of ACT (ISACT)',tm:'act',nt:'In school/ISACT',x:260,y:320,s:[3,4]},
+          {id:'jakia',n:'Jakia',t:'Director of Senior Counseling',tm:'seniors',x:400,y:320,s:[1,2,3,4]},
+          {id:'rhonda',n:'Rhonda',t:'Director of Advising',tm:'advising',x:540,y:320,s:[1,2,3,4]},
+          {id:'tim',n:'Tim',t:'Senior Counselor',tm:'seniors',nt:'2 nights',x:680,y:320,s:[1,2,3,4]},
+          {id:'mychell',n:'Mychell',t:'Senior Counselor',tm:'seniors',nt:'2 nights',x:780,y:320,s:[1,2,3,4]},
+          {id:'lauren',n:'Lauren',t:'Learning Manager',tm:'learning',nt:'3 nights',x:20,y:430,s:[1,2,3,4]},
+          {id:'brei',n:'Brei',t:'Dir. of Instructional Excellence',tm:'learning',nt:'1 night/wk',x:140,y:430,s:[2,4]},
+          {id:'rachel',n:'Rachel',t:'Sr. Counselor / Writing Lead',tm:'seniors',nt:'2 nights',x:400,y:430,s:[1,2,3,4]},
+          {id:'kirsten_d',n:'Kirsten',t:'Advisor + ACT (2 nights)',tm:'advising',nt:'2 nights',x:520,y:430,s:[1,2]},
+          {id:'kirsten_i',n:'Kirsten',t:'ISACT Facilitator',tm:'act',x:520,y:430,s:[3,4]},
+          {id:'nija',n:"Ni'Ja",t:'ISACT Facilitator',tm:'act',x:640,y:430,s:[3,4]},
+          {id:'tavidee',n:'Tavidee',t:'Advisor',tm:'advising',x:640,y:430,s:[1,2]},
+          {id:'tavidee34',n:'Tavidee',t:'Advisor',tm:'advising',x:760,y:430,s:[3,4]},
+          {id:'richard',n:'Richard',t:'Advisor',tm:'advising',x:760,y:430,s:[1,2]},
+          {id:'richard34',n:'Richard',t:'Advisor',tm:'advising',x:870,y:430,s:[3,4]},
+          {id:'new_ft1',n:'New FT 1',t:'Learning Manager',tm:'learning',nt:'3–4 nights',x:20,y:540,s:[1,2,3,4]},
+          {id:'new_ft2',n:'New FT 2',t:'Learning Manager',tm:'learning',nt:'3 nights',x:130,y:540,s:[1,3,4]},
+          {id:'new_ft3',n:'New FT 3',t:'Learning Manager',tm:'learning',nt:'3 nights',x:240,y:540,s:[3]},
+          {id:'kendrick',n:'Kendrick',t:'Learning Manager (PT)',tm:'learning',nt:'1–2 nights',x:350,y:640,s:[1,2,3,4]},
+          {id:'subs',n:'Sub Roster',t:'LM Substitutes',tm:'learning',nt:'As needed',x:460,y:640,s:[1,2,3,4]},
+          {id:'alum_pt',n:'Open',t:'Advisor (Alum PT)',tm:'advising',x:640,y:640,s:[1,2]},
+          {id:'alum_pt34',n:'Open',t:'Advisor (Alum PT)',tm:'advising',x:760,y:640,s:[3,4]},
+          {id:'ops_a',n:'Open',t:'Operations Associate (PT)',tm:'ops',x:20,y:640,s:[1,2,3,4]},
+          {id:'drivers',n:'Drivers',t:'Drivers (PT)',tm:'ops',x:130,y:640,s:[1,2,3,4]},
+        ];
+        var SOLID=[
+          ['lucas','alyson'],['lucas','elin'],
+          ['josh','marcus'],['josh','forrest'],['josh','angela'],['josh','alexis'],['josh','open_p'],['josh','myeisha'],['josh','chasity'],['josh','rhonda'],
+          ['chasity','lauren'],['chasity','new_ft1'],['chasity','new_ft2'],['chasity','new_ft3'],['chasity','brei'],
+          ['jakia','rachel'],['jakia','tim'],['jakia','mychell'],
+          ['rhonda','tavidee'],['rhonda','richard'],['rhonda','alum_pt'],['rhonda','kirsten_d'],
+          ['rhonda','tavidee34'],['rhonda','richard34'],['rhonda','alum_pt34'],['rhonda','kirsten_i'],
+          ['marcus','ops_a'],['marcus','drivers'],
+          ['aareena_i','kirsten_i'],['aareena_i','nija'],
+        ];
+        var DOTTED=[
+          ['lucas','myeisha'],['elin','myeisha'],
+          ['lucas','chasity'],['lucas','rhonda'],
+          ['jakia','chasity'],['jakia','rhonda'],['chasity','rhonda'],
+          ['chasity','aareena'],['chasity','aareena_i'],
+          ['elin','aareena'],['elin','aareena_i'],
+          ['kirsten_d','aareena'],
+          ['aareena','lauren'],['aareena','new_ft1'],['aareena_i','lauren'],
+          ['marcus','forrest'],
+          ['lucas','josh'],
+          ['alexis','open_p'],
+          ['chasity','kendrick'],['chasity','subs'],
+        ];
+
+        var cur=1, editId=null, pos={}, userNotes={}, userTitles={};
+
+        function load(){try{var d=JSON.parse(localStorage.getItem(SK)||'{}');pos=d.pos||{};userNotes=d.notes||{};userTitles=d.titles||{};}catch(e){}}
+        function save(){try{localStorage.setItem(SK,JSON.stringify({pos:pos,notes:userNotes,titles:userTitles}));}catch(e){}}
+        function gpos(p){return pos[p.id+'_'+cur]||{x:p.x,y:p.y};}
+        function spos(id,x,y){pos[id+'_'+cur]={x:x,y:y};save();}
+        function vis(){return P.filter(function(p){return p.s.indexOf(cur)>-1;});}
+        function ini(n){return n.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();}
+
+        function render(){
+          var canvas=document.getElementById('oc-canvas');
+          [].slice.call(canvas.querySelectorAll('.pc')).forEach(function(e){e.remove();});
+          vis().forEach(function(p){
+            var gp=gpos(p);
+            var title=userTitles[p.id]||p.t;
+            var note=userNotes[p.id]||'';
+            var col=TC[p.tm]||'#555';
+            var tc=['#f0c917'].indexOf(col)>-1?'#333':'#fff';
+            var div=document.createElement('div');
+            div.className='pc'+(note?' hasnote':'');
+            div.id='pc-'+p.id;
+            div.style.left=gp.x+'px';
+            div.style.top=gp.y+'px';
+            var nb=p.nt?('<div class="pnights" style="background:'+col+';color:'+tc+'">'+p.nt+'</div>'):'';
+            div.innerHTML='<div class="av" style="background:'+col+';color:'+tc+'"><div class="nring" style="border-color:'+col+'"></div><div class="ndot"></div>'+ini(p.n)+'</div><div class="pname">'+p.n+'</div><div class="ptitle">'+title+'</div>'+nb+'<button class="edbtn" onclick="ocOpenModal(\''+p.id+'\')">Edit</button>';
+            drag(div,p);
+            canvas.appendChild(div);
+          });
+          lines();
+        }
+
+        function lines(){
+          var svg=document.getElementById('oc-svg');
+          svg.innerHTML='';
+          var vids={};vis().forEach(function(p){vids[p.id]=true;});
+          function ln(a,b,dash){
+            var pa=P.find(function(p){return p.id===a;}),pb=P.find(function(p){return p.id===b;});
+            if(!pa||!pb||!vids[a]||!vids[b])return;
+            var ap=gpos(pa),bp=gpos(pb);
+            var el=document.createElementNS('http://www.w3.org/2000/svg','line');
+            el.setAttribute('x1',ap.x+55);el.setAttribute('y1',ap.y+42);
+            el.setAttribute('x2',bp.x+55);el.setAttribute('y2',bp.y+8);
+            el.setAttribute('stroke',dash?'#80bbaf':'#061b17');
+            el.setAttribute('stroke-width',dash?'1.5':'2');
+            if(dash)el.setAttribute('stroke-dasharray','5 3');
+            svg.appendChild(el);
+          }
+          SOLID.forEach(function(r){ln(r[0],r[1],false);});
+          DOTTED.forEach(function(r){ln(r[0],r[1],true);});
+        }
+
+        function drag(el,person){
+          var sx,sy,ox,oy;
+          el.addEventListener('mousedown',function(e){
+            if(e.target.tagName==='BUTTON')return;
+            e.preventDefault();
+            sx=e.clientX;sy=e.clientY;
+            var gp=gpos(person);ox=gp.x;oy=gp.y;
+            el.classList.add('dragging');
+            var canvas=document.getElementById('oc-canvas');
+            function mv(e){
+              var nx=Math.max(0,Math.min(canvas.offsetWidth-118,ox+e.clientX-sx));
+              var ny=Math.max(0,Math.min(canvas.offsetHeight-130,oy+e.clientY-sy));
+              el.style.left=nx+'px';el.style.top=ny+'px';
+              spos(person.id,nx,ny);lines();
+            }
+            function up(){el.classList.remove('dragging');document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);}
+            document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);
+          });
+        }
+
+        window.ocOpenModal=function(id){
+          editId=id;
+          var p=P.find(function(x){return x.id===id;});
+          document.getElementById('oc-mname').textContent=p.n;
+          document.getElementById('oc-mtitle').value=userTitles[id]||p.t;
+          document.getElementById('oc-mnotes').value=userNotes[id]||'';
+          document.getElementById('oc-modal-bg').classList.add('open');
+        };
+        window.ocCloseModal=function(){document.getElementById('oc-modal-bg').classList.remove('open');editId=null;};
+        window.ocSaveModal=function(){
+          var p=P.find(function(x){return x.id===editId;});
+          var nt=document.getElementById('oc-mtitle').value;
+          var nn=document.getElementById('oc-mnotes').value;
+          if(nt!==p.t)userTitles[editId]=nt;else delete userTitles[editId];
+          if(nn)userNotes[editId]=nn;else delete userNotes[editId];
+          save();ocCloseModal();render();
+        };
+        window.ocScenario=function(n,btn){
+          cur=n;
+          [].slice.call(document.querySelectorAll('.oc-sbtn')).forEach(function(b){b.classList.remove('active');});
+          btn.classList.add('active');
+          render();
+        };
+        window.ocReset=function(){
+          Object.keys(pos).forEach(function(k){if(k.endsWith('_'+cur))delete pos[k];});
+          save();render();
+        };
+
+        document.getElementById('oc-modal-bg').addEventListener('click',function(e){
+          if(e.target===document.getElementById('oc-modal-bg'))ocCloseModal();
+        });
+
+        load();render();
+      })();
+      </script>
     </div>
 
     <div id="staffLock" class="lock-section">
