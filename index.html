@@ -1343,6 +1343,7 @@
       <script>
       (function(){
         var SK='bryc_orgv4';
+        var GAS_URL='YOUR_APPS_SCRIPT_URL_HERE';
         var TC={exec:'#061b17',dev:'#00775f',learning:'#f0c917',act:'#e06326',seniors:'#00adad',advising:'#2a6465',persistence:'#393086',community:'#ed125f',recruitment:'#eb2627',ops:'#094d9e'};
         var P=[
           {id:'lucas',n:'Lucas S.',t:'Executive Director',tm:'exec',x:360,y:16,s:[1,2,3,4]},
@@ -1408,8 +1409,20 @@
 
         var cur=1, editId=null, pos={}, userNotes={}, userTitles={};
 
-        function load(){try{var d=JSON.parse(localStorage.getItem(SK)||'{}');pos=d.pos||{};userNotes=d.notes||{};userTitles=d.titles||{};}catch(e){}}
-        function save(){try{localStorage.setItem(SK,JSON.stringify({pos:pos,notes:userNotes,titles:userTitles}));}catch(e){}}
+        function load(){
+          fetch(GAS_URL)
+            .then(function(r){return r.json();})
+            .then(function(d){pos=d.pos||{};userNotes=d.notes||{};userTitles=d.titles||{};render();})
+            .catch(function(){
+              try{var d=JSON.parse(localStorage.getItem(SK)||'{}');pos=d.pos||{};userNotes=d.notes||{};userTitles=d.titles||{};}catch(e){}
+              render();
+            });
+        }
+        function save(){
+          var payload=JSON.stringify({pos:pos,notes:userNotes,titles:userTitles});
+          fetch(GAS_URL,{method:'POST',body:payload,headers:{'Content-Type':'application/json'}})
+            .catch(function(){try{localStorage.setItem(SK,payload);}catch(e){}});
+        }
         function gpos(p){return pos[p.id+'_'+cur]||{x:p.x,y:p.y};}
         function spos(id,x,y){pos[id+'_'+cur]={x:x,y:y};save();}
         function vis(){return P.filter(function(p){return p.s.indexOf(cur)>-1;});}
@@ -1509,7 +1522,7 @@
           if(e.target===document.getElementById('oc-modal-bg'))ocCloseModal();
         });
 
-        load();render();
+        load();
       })();
       </script>
     </div>
