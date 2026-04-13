@@ -1267,8 +1267,9 @@
         .oc-sbtn{font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--gray-border);background:var(--white);color:var(--text-primary);cursor:pointer;}
         .oc-sbtn:hover{background:var(--green-wash);}
         .oc-sbtn.active{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
-        #oc-canvas{position:relative;width:100%;height:820px;background:var(--gray-bg);border-radius:12px;border:1px solid var(--gray-border);overflow:hidden;margin:10px 0;}
-        .pc{position:absolute;width:110px;background:var(--white);border:1px solid rgba(0,0,0,0.13);border-radius:9px;padding:7px 5px 5px;cursor:grab;text-align:center;user-select:none;}
+        #oc-canvas-wrap{width:100%;overflow-x:auto;margin:10px 0;}
+        #oc-canvas{position:relative;width:1100px;height:820px;background:var(--gray-bg);border-radius:12px;border:1px solid var(--gray-border);}
+        .pc{position:absolute;width:92px;background:var(--white);border:1px solid rgba(0,0,0,0.13);border-radius:9px;padding:6px 4px 5px;cursor:grab;text-align:center;user-select:none;}
         .pc:hover{border-color:rgba(0,0,0,0.3);}
         .pc.dragging{cursor:grabbing;opacity:.85;z-index:100;}
         .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin:0 auto 4px;position:relative;}
@@ -1321,6 +1322,7 @@
         <div class="ll"><div class="lc" style="background:#061b17;"></div> Exec</div>
       </div>
 
+      <div id="oc-canvas-wrap">
       <div id="oc-canvas">
         <svg id="oc-svg"></svg>
         <div id="oc-modal-bg">
@@ -1337,8 +1339,7 @@
           </div>
         </div>
       </div>
-
-      <p style="font-size:11px;color:var(--gray-light);margin-top:4px;font-style:italic;">Scenario 1: No ISACT, no Brei · Scenario 2: No ISACT, Brei returns as Dir. of Instructional Excellence · Scenario 3: ISACT continues, no Brei · Scenario 4: ISACT continues, Brei returns</p>
+      </div>font-style:italic;">Scenario 1: No ISACT, no Brei · Scenario 2: No ISACT, Brei returns as Dir. of Instructional Excellence · Scenario 3: ISACT continues, no Brei · Scenario 4: ISACT continues, Brei returns</p>
 
       <script>
       (function(){
@@ -1348,42 +1349,42 @@
         var BIN_URL='https://api.jsonbin.io/v3/b/'+BIN_ID;
         var TC={exec:'#061b17',dev:'#00775f',learning:'#f0c917',act:'#e06326',seniors:'#00adad',advising:'#2a6465',persistence:'#393086',community:'#ed125f',recruitment:'#eb2627',ops:'#094d9e'};
         var P=[
-          {id:'lucas',n:'Lucas S.',t:'Executive Director',tm:'exec',x:360,y:16,s:[1,2,3,4]},
-          {id:'josh',n:'Josh',t:'Chief of Staff',tm:'exec',x:180,y:110,s:[1,2,3,4]},
-          {id:'elin',n:'Elin',t:'Chief of Product',tm:'exec',x:360,y:110,s:[1,2,3,4]},
-          {id:'myeisha',n:'Myeisha',t:'Deputy Chief of Staff',tm:'exec',x:540,y:110,s:[1,2,3,4]},
-          {id:'alyson',n:'Alyson',t:'Director of Development',tm:'dev',x:680,y:110,s:[1,2,3,4]},
-          {id:'marcus',n:'Marcus',t:'Director of Operations',tm:'ops',x:20,y:215,s:[1,2,3,4]},
-          {id:'forrest',n:'Forrest',t:'Dir. of Fellow Recruitment',tm:'recruitment',x:140,y:215,s:[1,2,3,4]},
-          {id:'angela',n:'Angela',t:'Community Engagement Mgr',tm:'community',x:260,y:215,s:[1,2,3,4]},
-          {id:'alexis',n:'Alexis',t:'Persistence Manager',tm:'persistence',x:390,y:215,s:[1,2,3,4]},
-          {id:'open_p',n:'Open',t:'Persistence (Title TBD)',tm:'persistence',x:510,y:215,s:[1,2,3,4]},
-          {id:'chasity',n:'Chasity',t:'Director of Programs',tm:'learning',nt:'0–1 night/wk',x:140,y:320,s:[1,2,3,4]},
-          {id:'aareena',n:'Aareena',t:'Director of ACT',tm:'act',nt:'Backup only',x:260,y:320,s:[1,2]},
-          {id:'aareena_i',n:'Aareena',t:'Dir. of ACT (ISACT)',tm:'act',nt:'In school/ISACT',x:260,y:320,s:[3,4]},
-          {id:'jakia',n:'Jakia',t:'Director of Senior Counseling',tm:'seniors',x:400,y:320,s:[1,2,3,4]},
-          {id:'rhonda',n:'Rhonda',t:'Director of Advising',tm:'advising',x:540,y:320,s:[1,2,3,4]},
-          {id:'tim',n:'Tim',t:'Senior Counselor',tm:'seniors',nt:'2 nights',x:680,y:320,s:[1,2,3,4]},
-          {id:'mychell',n:'Mychell',t:'Senior Counselor',tm:'seniors',nt:'2 nights',x:780,y:320,s:[1,2,3,4]},
+          {id:'lucas',n:'Lucas',t:'CEO',tm:'exec',x:490,y:16,s:[1,2,3,4]},
+          {id:'josh',n:'Josh',t:'Chief of Staff',tm:'exec',x:340,y:100,s:[1,2,3,4]},
+          {id:'elin',n:'Elin',t:'Chief of Product',tm:'exec',x:490,y:116,s:[1,2,3,4]},
+          {id:'myeisha',n:'Myeisha',t:'Deputy Chief of Staff',tm:'exec',x:620,y:200,s:[1,2,3,4]},
+          {id:'alyson',n:'Alyson',t:'Director of Development',tm:'dev',x:750,y:100,s:[1,2,3,4]},
+          {id:'marcus',n:'Marcus',t:'Director of Operations',tm:'ops',x:20,y:210,s:[1,2,3,4]},
+          {id:'forrest',n:'Forrest',t:'Dir. of Fellow Recruitment',tm:'recruitment',x:120,y:210,s:[1,2,3,4]},
+          {id:'angela',n:'Angela',t:'Community Engagement Mgr',tm:'community',x:220,y:210,s:[1,2,3,4]},
+          {id:'alexis',n:'Alexis',t:'Persistence Manager',tm:'persistence',x:870,y:210,s:[1,2,3,4]},
+          {id:'open_p',n:'Open',t:'Persistence (Title TBD)',tm:'persistence',x:970,y:210,s:[1,2,3,4]},
+          {id:'chasity',n:'Chasity',t:'Director of Programs',tm:'learning',nt:'0–1 night/wk',x:120,y:320,notes:'Her Own Role\n• Zero to one night facilitation; wants out of a dedicated cohort\n• Needs time to think strategically, manage systems, and support her team\n• Wants to physically move out of her current room to create clearer separation from day-to-day ops\n• Open to donor-facing work — outside her comfort zone but she\'ll do it well\n• Wants to grow as a leader who empowers others broadly\n\nTeam Structure & Instructional Quality\n• Program managers at 3 nights with a WFH day and Friday half-days\n• Formalized instructional coaching: observations, coaching plans per facilitator, consistency across team\n• Monthly PDs at both director level (her + Aareena) and whole-team\n• Wants Brei back to own instructional coaching — clear vision for what Brei would own\n• Would own instructional coaching herself as a contingency if Brei doesn\'t return\n\nFellow Data & Systems\n• More formalized, hard data on Fellows built earlier — grades, interests, postsecondary direction\n• Wants to capture what Lauren and Kendrick do naturally and systematize it\n• Interested in roadmaps becoming a real tracking system, not just a document\n\nCurriculum & Program Design\n• Separate 9th and 10th grade programming\n• Introduce ACT in 10th grade in spring so students have an official entering score for 11th\n• Treat the College Playbook as a reference text — referenced regularly, not just handed out\n• More explicit Fellow expectations beyond attendance, communicated to Fellows and guardians\n• Big/Little program baked into program time — extended break with prompts, monthly rhythm\n\nGuardian Engagement\n• Stop guardians from letting Fellows graduate early without a plan\n• More accessible guardian engagement — community-facing sessions at libraries or neutral spaces\n• Guardians need to understand what BRYC is actually doing',s:[1,2,3,4]},
+          {id:'aareena',n:'Aareena',t:'Director of ACT',tm:'act',nt:'Backup only',x:220,y:320,notes:'Own ACT Curriculum (10th–12th grade)\n• Develop cohesive ACT curriculum sequence spanning 10th, 11th, and 12th grade\n• Lead introduction of ACT prep into 10th grade beginning Spring 2027\n• Establish and monitor instructional consistency across all ACT cohorts\n• Explore external ACT and MasteryPrep instructional partnerships\n\nLead Saturday ACT Prep Series\n• Design and facilitate 2–3 Saturday ACT Prep series per year at Downtown campus\n• Public sessions open to BR community (paid); BRYC Fellows attend at no cost\n• Revenue from public sessions goes directly to BRYC\n• Coordinates with ops associate for logistics\n\nProvide IFS Support\n• Supports IFS for cohorts led by Nijah and Kirsten\n• Handles Fellow, guardian, and mentor communications part-time staff cannot manage\n\nBackup Facilitator\n• First-call backup for any learning cohort when a core staff member is absent\n• Maintains familiarity with all grade-level curricula',s:[1,2]},
+          {id:'aareena_i',n:'Aareena',t:'Dir. of ACT (ISACT)',tm:'act',nt:'In school/ISACT',x:220,y:320,notes:'Own ACT Curriculum (10th–12th grade)\n• Develop cohesive ACT curriculum sequence spanning 10th, 11th, and 12th grade\n• Lead introduction of ACT prep into 10th grade beginning Spring 2027\n• Establish and monitor instructional consistency across all ACT cohorts\n• Explore external ACT and MasteryPrep instructional partnerships\n\nIn Scenarios 3 & 4\n• Aareena remains in ISACT role and is not a regular BRYC facilitator\n• Manages Kirsten and Ni\'Ja as ISACT Facilitators',s:[3,4]},
+          {id:'jakia',n:'Jakia',t:'Director of Senior Counseling',tm:'seniors',x:380,y:320,notes:'Cohort & Role Structure\n• Wants to drop her direct cohort to focus on director-level work\n• Honest reasoning: when forced to choose, she defaults to Fellow-facing work over strategy\n• Freed-up bandwidth → college/scholarship partnerships, guardian engagement, team development\n• Senior counselors spend ~75% of time on cohort work outside facilitation\n\nProgram Design & Scope Expansion\n• Push senior-year college prep work earlier — more intentional junior year sessions on Common App and essays\n• Add 9th/10th grade curriculum around postsecondary pathway exploration\n• Interested in facilitation training for the senior team to improve program energy and attendance\n\nGuardian Engagement\n• Wants monthly guardian webinars to keep families informed\n• Believes guardian buy-in directly impacts Fellow buy-in and FAM attendance\n• Sees senior-to-persistence handoff as a guardian engagement opportunity\n\nSenior-to-Persistence Handoff\n• Wants a more intentional transition structure\n• Improving communication touch points between May and summer send-off\n\nWriting Coaches\n• Underutilization problem: Fellows didn\'t see coaches enough to build trust\n• Recommendation: keep dedicated coach for Rachel\'s cohort; consolidate other three to one shared coach\n\nSummer Planning\n• Senior team trainings over the summer\n• Collaborating with Chasity and Angela on mentor and facilitation training\n• Wants to send current juniors a postcard/personalized piece before senior year — a warm touch point',s:[1,2,3,4]},
+          {id:'rhonda',n:'Rhonda',t:'Director of Advising',tm:'advising',x:530,y:320,s:[1,2,3,4]},
+          {id:'tim',n:'Tim',t:'Senior Counselor',tm:'seniors',nt:'2 nights',x:700,y:320,s:[1,2,3,4]},
+          {id:'mychell',n:'Mychell',t:'Senior Counselor',tm:'seniors',nt:'2 nights',x:800,y:320,s:[1,2,3,4]},
           {id:'lauren',n:'Lauren',t:'Learning Manager',tm:'learning',nt:'3 nights',x:20,y:430,s:[1,2,3,4]},
-          {id:'brei',n:'Brei',t:'Dir. of Instructional Excellence',tm:'learning',nt:'1 night/wk',x:140,y:430,s:[2,4]},
-          {id:'rachel',n:'Rachel',t:'Sr. Counselor / Writing Lead',tm:'seniors',nt:'2 nights',x:400,y:430,s:[1,2,3,4]},
-          {id:'kirsten_d',n:'Kirsten',t:'Advisor + ACT (2 nights)',tm:'advising',nt:'2 nights',x:520,y:430,s:[1,2]},
-          {id:'kirsten_i',n:'Kirsten',t:'ISACT Facilitator',tm:'act',x:520,y:430,s:[3,4]},
-          {id:'nija',n:"Ni'Ja",t:'ISACT Facilitator',tm:'act',x:640,y:430,s:[3,4]},
+          {id:'brei',n:'Brei',t:'Dir. of Instructional Excellence',tm:'learning',nt:'1 night/wk',x:120,y:430,notes:'Lead Instructional Coaching\n• Systematic nightly observations across all facilitation cohorts, rotating campuses\n• Develop and maintain individualized coaching plans for each learning manager\n• Lead monthly PD sessions — sharing practices, reflecting on outcomes, aligning on instructional standards\n• Establish expectations for when instructional adaptation is appropriate vs. when consistency is required\n• Build systems for team-wide sharing of what\'s working so best practices aren\'t lost\n\nProvide IFS Support for PT Staff\n• Manages Fellow, guardian, and mentor communications on behalf of Kendrick\'s cohort\n• Ensures no Fellow in a PT-led cohort goes without timely follow-through\n\nFacilitate One Night Per Week\n• Maintains direct facilitation presence in program\n• Fall maternity leave: PT sub covers slot; resumes upon return\n\nNote: Role exists in Scenarios 2 and 4 only',s:[2,4]},
+          {id:'rachel',n:'Rachel',t:'Sr. Counselor / Writing Lead',tm:'seniors',nt:'2 nights',x:380,y:430,s:[1,2,3,4]},
+          {id:'kirsten_d',n:'Kirsten',t:'Advisor + ACT (2 nights)',tm:'advising',nt:'2 nights',x:530,y:430,notes:'Postsecondary Advising\n• Individualized postsecondary counseling across partner high schools — all pathways, no bias toward 4-year degrees\n• 1:1 advising through in-person school visits, virtual office hours, and direct email/text access\n• Customized postsecondary recommendations per advisee based on interests, GPA, ACT score, and goals\n• Tracks advisee profiles and progress through Overgrad\n• Provides advisees and families free access to College Aid Pro\n\nProgram Facilitation (Scenarios 1 & 2)\n• Facilitates 2 BRYC program nights per week\n• Manages IFS for her own cohort — proactive communication with Fellows, guardians, and mentors\n\nNote: In Scenarios 3 & 4, this role transitions to ISACT Instructor — no change from current responsibilities',s:[1,2]},
+          {id:'kirsten_i',n:'Kirsten',t:'ISACT Facilitator',tm:'act',x:280,y:430,s:[3,4]},
+          {id:'nija',n:"Ni'Ja",t:'ISACT Facilitator',tm:'act',x:380,y:430,s:[3,4]},
           {id:'tavidee',n:'Tavidee',t:'Advisor',tm:'advising',x:640,y:430,s:[1,2]},
-          {id:'tavidee34',n:'Tavidee',t:'Advisor',tm:'advising',x:760,y:430,s:[3,4]},
-          {id:'richard',n:'Richard',t:'Advisor',tm:'advising',x:760,y:430,s:[1,2]},
-          {id:'richard34',n:'Richard',t:'Advisor',tm:'advising',x:870,y:430,s:[3,4]},
+          {id:'tavidee34',n:'Tavidee',t:'Advisor',tm:'advising',x:530,y:430,s:[3,4]},
+          {id:'richard',n:'Richard',t:'Advisor',tm:'advising',x:740,y:430,s:[1,2]},
+          {id:'richard34',n:'Richard',t:'Advisor',tm:'advising',x:630,y:430,s:[3,4]},
           {id:'new_ft1',n:'New FT 1',t:'Learning Manager',tm:'learning',nt:'3–4 nights',x:20,y:540,s:[1,2,3,4]},
-          {id:'new_ft2',n:'New FT 2',t:'Learning Manager',tm:'learning',nt:'3 nights',x:130,y:540,s:[1,3,4]},
-          {id:'new_ft3',n:'New FT 3',t:'Learning Manager',tm:'learning',nt:'3 nights',x:240,y:540,s:[3]},
-          {id:'kendrick',n:'Kendrick',t:'Learning Manager (PT)',tm:'learning',nt:'1–2 nights',x:350,y:640,s:[1,2,3,4]},
-          {id:'subs',n:'Sub Roster',t:'LM Substitutes',tm:'learning',nt:'As needed',x:460,y:640,s:[1,2,3,4]},
-          {id:'alum_pt',n:'Open',t:'Advisor (Alum PT)',tm:'advising',x:640,y:640,s:[1,2]},
-          {id:'alum_pt34',n:'Open',t:'Advisor (Alum PT)',tm:'advising',x:760,y:640,s:[3,4]},
-          {id:'ops_a',n:'Open',t:'Operations Associate (PT)',tm:'ops',x:20,y:640,s:[1,2,3,4]},
-          {id:'drivers',n:'Drivers',t:'Drivers (PT)',tm:'ops',x:130,y:640,s:[1,2,3,4]},
+          {id:'new_ft2',n:'New FT 2',t:'Learning Manager',tm:'learning',nt:'3 nights',x:120,y:540,s:[1,3,4]},
+          {id:'new_ft3',n:'New FT 3',t:'Learning Manager',tm:'learning',nt:'3 nights',x:220,y:540,s:[3]},
+          {id:'kendrick',n:'Kendrick',t:'Learning Manager (PT)',tm:'learning',nt:'1–2 nights',x:20,y:650,s:[1,2,3,4]},
+          {id:'subs',n:'Sub Roster',t:'LM Substitutes',tm:'learning',nt:'As needed',x:120,y:650,s:[1,2,3,4]},
+          {id:'alum_pt',n:'Open',t:'Advisor (Alum PT)',tm:'advising',x:640,y:540,s:[1,2]},
+          {id:'alum_pt34',n:'Open',t:'Advisor (Alum PT)',tm:'advising',x:530,y:540,s:[3,4]},
+          {id:'ops_a',n:'Open',t:'Operations Associate (PT)',tm:'ops',x:20,y:760,s:[1,2,3,4]},
+          {id:'drivers',n:'Drivers',t:'Drivers (PT)',tm:'ops',x:120,y:760,s:[1,2,3,4]},
         ];
         var SOLID=[
           ['lucas','alyson'],['lucas','elin'],
@@ -1444,11 +1445,13 @@
           vis().forEach(function(p){
             var gp=gpos(p);
             var title=userTitles[p.id]||p.t;
-            var note=userNotes[p.id]||'';
+            var hasUserNote=(userNotes[p.id]!==undefined&&userNotes[p.id]!=='');
+            var note=hasUserNote?userNotes[p.id]:(p.notes||'');
+            var hasNote=!!(note);
             var col=TC[p.tm]||'#555';
             var tc=['#f0c917'].indexOf(col)>-1?'#333':'#fff';
             var div=document.createElement('div');
-            div.className='pc'+(note?' hasnote':'');
+            div.className='pc'+(hasNote?' hasnote':'');
             div.id='pc-'+p.id;
             div.style.left=gp.x+'px';
             div.style.top=gp.y+'px';
@@ -1490,8 +1493,8 @@
             el.classList.add('dragging');
             var canvas=document.getElementById('oc-canvas');
             function mv(e){
-              var nx=Math.max(0,Math.min(canvas.offsetWidth-118,ox+e.clientX-sx));
-              var ny=Math.max(0,Math.min(canvas.offsetHeight-130,oy+e.clientY-sy));
+              var nx=Math.max(0,Math.min(1008,ox+e.clientX-sx));
+              var ny=Math.max(0,Math.min(690,oy+e.clientY-sy));
               el.style.left=nx+'px';el.style.top=ny+'px';
               spos(person.id,nx,ny);lines();
             }
@@ -1505,7 +1508,7 @@
           var p=P.find(function(x){return x.id===id;});
           document.getElementById('oc-mname').textContent=p.n;
           document.getElementById('oc-mtitle').value=userTitles[id]||p.t;
-          document.getElementById('oc-mnotes').value=userNotes[id]||'';
+          document.getElementById('oc-mnotes').value=(userNotes[id]!==undefined&&userNotes[id]!=='')?userNotes[id]:(p.notes||'');
           document.getElementById('oc-modal-bg').classList.add('open');
         };
         window.ocCloseModal=function(){document.getElementById('oc-modal-bg').classList.remove('open');editId=null;};
