@@ -1343,10 +1343,12 @@
       <script>
       (function(){
         var SK='bryc_orgv4';
-        var GAS_URL='https://script.google.com/macros/s/AKfycbwMAq1m2VCdhs608pwdbncLQO56Ye-hGLMFOjLzSGfLE7ZEZZCm5mw3d64lFWAodoMk/exec';
+        var BIN_ID='69dc31e4aaba882197f0dc2f';
+        var API_KEY='$2a$10$0rmlDSP.ZaLuyqU7cBTA1uIDS7wyglzLBrgIb2.r5tr2J2UOMbqea';
+        var BIN_URL='https://api.jsonbin.io/v3/b/'+BIN_ID;
         var TC={exec:'#061b17',dev:'#00775f',learning:'#f0c917',act:'#e06326',seniors:'#00adad',advising:'#2a6465',persistence:'#393086',community:'#ed125f',recruitment:'#eb2627',ops:'#094d9e'};
         var P=[
-          {id:'lucas',n:'Lucas S.',t:'CEO',tm:'exec',x:360,y:16,s:[1,2,3,4]},
+          {id:'lucas',n:'Lucas S.',t:'Executive Director',tm:'exec',x:360,y:16,s:[1,2,3,4]},
           {id:'josh',n:'Josh',t:'Chief of Staff',tm:'exec',x:180,y:110,s:[1,2,3,4]},
           {id:'elin',n:'Elin',t:'Chief of Product',tm:'exec',x:360,y:110,s:[1,2,3,4]},
           {id:'myeisha',n:'Myeisha',t:'Deputy Chief of Staff',tm:'exec',x:540,y:110,s:[1,2,3,4]},
@@ -1410,18 +1412,26 @@
         var cur=1, editId=null, pos={}, userNotes={}, userTitles={};
 
         function load(){
-          fetch(GAS_URL)
+          fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':false}})
             .then(function(r){return r.json();})
-            .then(function(d){pos=d.pos||{};userNotes=d.notes||{};userTitles=d.titles||{};render();})
+            .then(function(d){
+              var rec=d.record||d||{};
+              pos=rec.pos||{};userNotes=rec.notes||{};userTitles=rec.titles||{};
+              render();
+            })
             .catch(function(){
               try{var d=JSON.parse(localStorage.getItem(SK)||'{}');pos=d.pos||{};userNotes=d.notes||{};userTitles=d.titles||{};}catch(e){}
               render();
             });
         }
         function save(){
-          var payload=JSON.stringify({pos:pos,notes:userNotes,titles:userTitles});
-          fetch(GAS_URL,{method:'POST',body:payload,headers:{'Content-Type':'application/json'}})
-            .catch(function(){try{localStorage.setItem(SK,payload);}catch(e){}});
+          var payload={pos:pos,notes:userNotes,titles:userTitles};
+          try{localStorage.setItem(SK,JSON.stringify(payload));}catch(e){}
+          fetch(BIN_URL,{
+            method:'PUT',
+            headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
+            body:JSON.stringify(payload)
+          }).catch(function(){});
         }
         function gpos(p){return pos[p.id+'_'+cur]||{x:p.x,y:p.y};}
         function spos(id,x,y){pos[id+'_'+cur]={x:x,y:y};save();}
