@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Team Staffing · 2026–2027 · BRYC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a; --white: #fff; --green: #1B4332; --gold: #B8860B;
+  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+  --gray-400: #9ca3af; --gray-600: #4b5563;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--black); line-height: 1.6; }
+.site-header { background: var(--black); padding: 20px 40px; display: flex; align-items: center; gap: 16px; }
+.logo-circle { width: 44px; height: 44px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--black); flex-shrink: 0; }
+.site-header h1 { color: white; font-size: 15px; font-weight: 500; }
+.site-header h1 span { color: var(--gray-400); font-weight: 300; }
+.container { max-width: 960px; margin: 0 auto; padding: 60px 40px 100px; }
+.page-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 12px; }
+.page-title { font-size: 36px; font-weight: 700; line-height: 1.15; margin-bottom: 8px; }
+.page-subtitle { font-size: 16px; color: var(--gray-600); font-weight: 300; margin-bottom: 48px; max-width: 560px; }
+.assumptions { background: var(--gray-50); border-left: 3px solid var(--green); padding: 20px 24px; margin-bottom: 48px; border-radius: 0 6px 6px 0; }
+.assumptions h3 { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+.assumptions ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.assumptions li { font-size: 13px; color: var(--gray-600); display: flex; align-items: center; gap: 8px; }
+.assumptions li::before { content: ''; display: inline-block; width: 5px; height: 5px; background: var(--green); border-radius: 50%; flex-shrink: 0; }
+.tab-nav { display: flex; gap: 0; margin-bottom: 32px; border-bottom: 2px solid var(--gray-200); }
+.tab-btn { background: none; border: none; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--gray-400); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .15s; white-space: nowrap; }
+.tab-btn:hover { color: var(--black); }
+.tab-btn.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
+.tab-btn .world-label { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 2px; opacity: .7; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+.scenario-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+.scenario-conditions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 20px; }
+.badge-green { background: #dcfce7; color: #14532d; }
+.badge-red { background: #fee2e2; color: #7f1d1d; }
+.badge-gray { background: var(--gray-100); color: var(--gray-600); }
+.stats-row { display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+.stat-card { background: var(--black); color: white; padding: 20px 24px; border-radius: 8px; flex: 1; min-width: 140px; }
+.stat-card.highlight { background: var(--green); }
+.stat-card.caution { background: #92400e; }
+.stat-card.warning { background: #7f1d1d; }
+.stat-number { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; line-height: 1; margin-bottom: 6px; }
+.stat-label { font-size: 12px; opacity: .75; line-height: 1.4; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 12px; }
+.staff-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; font-size: 14px; }
+.staff-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-400); padding: 0 12px 10px; border-bottom: 1px solid var(--gray-200); }
+.staff-table thead th:first-child { padding-left: 0; }
+.staff-table tbody tr { border-bottom: 1px solid var(--gray-100); transition: background .1s; }
+.staff-table tbody tr:hover { background: var(--gray-50); }
+.staff-table tbody tr:last-child { border-bottom: none; }
+.staff-table td { padding: 12px; vertical-align: middle; }
+.staff-table td:first-child { padding-left: 0; }
+.person-name { font-weight: 600; }
+.person-role { font-size: 12px; color: var(--gray-400); margin-top: 1px; }
+.night-dots { display: flex; gap: 4px; align-items: center; }
+.dot { width: 22px; height: 22px; border-radius: 4px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 9px; color: white; font-weight: 500; }
+.dot.empty { background: var(--gray-100); color: var(--gray-400); }
+.night-count { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--green); }
+.night-count.zero { color: var(--gray-300); }
+.status-tag { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 4px; }
+.status-returning { background: #dcfce7; color: #14532d; }
+.status-new { background: #dbeafe; color: #1e3a8a; }
+.status-upside { background: #fef9c3; color: #713f12; }
+.status-na { background: var(--gray-100); color: var(--gray-400); }
+.totals-row td { border-top: 2px solid var(--gray-200) !important; border-bottom: none !important; font-weight: 600; padding-top: 14px !important; }
+.cap-wrap { background: var(--gray-100); border-radius: 6px; height: 10px; position: relative; margin: 10px 0 6px; overflow: visible; }
+.cap-fill { height: 100%; border-radius: 6px; background: var(--green); }
+.cap-target { position: absolute; top: -4px; height: 18px; width: 2px; background: var(--gray-600); border-radius: 1px; right: -2px; }
+.cap-target::after { content: attr(data-label); position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 10px; font-family: 'DM Mono', monospace; color: var(--gray-600); white-space: nowrap; }
+.cap-legend { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-400); font-family: 'DM Mono', monospace; }
+.note-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 16px 20px; font-size: 13px; color: #713f12; line-height: 1.6; margin-bottom: 16px; }
+.note-box strong { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; color: #92400e; }
+.trigger-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 16px 20px; font-size: 13px; color: #14532d; line-height: 1.6; margin-bottom: 32px; }
+.trigger-box strong { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; color: #166534; }
+/* JD accordion */
+.jd-section { margin-top: 40px; }
+.jd-section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px; padding-top: 32px; border-top: 1px solid var(--gray-200); }
+.jd-accordion { border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+.jd-trigger { width: 100%; background: var(--gray-50); border: none; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; transition: background .15s; }
+.jd-trigger:hover { background: var(--gray-100); }
+.jd-trigger.open { background: var(--green); color: white; }
+.jd-trigger-left { display: flex; align-items: center; gap: 14px; }
+.jd-trigger-badge { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; background: var(--gray-200); color: var(--gray-600); flex-shrink: 0; }
+.jd-trigger.open .jd-trigger-badge { background: rgba(255,255,255,.2); color: white; }
+.jd-trigger-name { font-size: 15px; font-weight: 600; color: var(--black); }
+.jd-trigger.open .jd-trigger-name { color: white; }
+.jd-trigger-role { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+.jd-trigger.open .jd-trigger-role { color: rgba(255,255,255,.7); }
+.jd-chevron { font-size: 18px; color: var(--gray-400); transition: transform .2s; flex-shrink: 0; }
+.jd-trigger.open .jd-chevron { transform: rotate(180deg); color: white; }
+.jd-body { display: none; padding: 28px 24px; border-top: 1px solid var(--gray-200); background: white; }
+.jd-body.open { display: block; animation: fadeIn .2s ease; }
+.jd-overview { font-size: 14px; color: var(--gray-600); line-height: 1.75; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--gray-100); }
+.jd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.jd-duty-group { margin-bottom: 20px; }
+.jd-duty-title { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+.jd-duty-list { list-style: none; }
+.jd-duty-list li { font-size: 13px; color: var(--gray-600); padding: 5px 0 5px 16px; position: relative; line-height: 1.55; border-bottom: 1px solid var(--gray-100); }
+.jd-duty-list li:last-child { border-bottom: none; }
+.jd-duty-list li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 11px; top: 7px; }
+.jd-nights-note { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #14532d; margin-bottom: 20px; }
+.jd-meta { display: flex; gap: 12px; flex-wrap: wrap; padding-top: 20px; border-top: 1px solid var(--gray-100); }
+.jd-meta-item { font-size: 12px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 4px; padding: 6px 12px; color: var(--gray-600); }
+.jd-meta-item strong { color: var(--black); }
+@media (max-width:640px) {
+  .container { padding: 40px 20px 80px; }
+  .page-title { font-size: 26px; }
+  .tab-btn { padding: 12px 14px; font-size: 13px; }
+  .jd-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-circle">BRYC</div>
+  <h1>Learning Team Staffing <span>· 2026–2027</span></h1>
+</header>
+
+<div class="container">
+  <p class="page-eyebrow">Planning · Internal</p>
+  <h1 class="page-title">Four Program Staffing Scenarios</h1>
+
+  <div style="background:#f0fdfa;border-left:3px solid #0d9488;border-radius:0 6px 6px 0;padding:14px 20px;margin-bottom:20px;max-width:680px;">
+    <p style="font-size:13px;color:#0f766e;line-height:1.65;margin:0;"><strong>Note on the Senior Team:</strong> As of now, nothing is changing with the Senior Team. Rachel has confirmed she is returning, Tim's sole focus will be senior counseling, all counselors will facilitate two nights per week, and Jakia will focus on management, codification, and owning the senior process.</p>
+  </div>
+
+  <p class="page-subtitle">Enrollment target: 415 students (8th–11th grade). Cohort cap: 30 per night-slot. Four nights per week across two campuses.</p>
+
+  <div class="assumptions">
+    <h3>Fixed Assumptions Across All Scenarios</h3>
+    <ul>
+      <li>Chasity: 0 teaching nights (director role)</li>
+      <li>Lauren: 3 nights (confirmed FT)</li>
+      <li>Kendrick: 3 nights (confirmed FT — staying)</li>
+      <li>Kirsten: 2 nights (Scenarios 1 & 2 only; primary role: Advising)</li>
+      <li>Aareena: not teaching in out-of-school program</li>
+      <li>Ni'Ja: Advising team</li>
+      <li>New FT hire: up to 4 nights</li>
+    </ul>
+  </div>
+
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="showTab(event,'s1')">
+      <span class="world-label">Scenario 1 ★ Prioritized</span>No ISACT · No Brei
+    </button>
+    <button class="tab-btn" role="tab" onclick="showTab(event,'s2')">
+      <span class="world-label">Scenario 2</span>No ISACT · Brei Returns
+    </button>
+    <button class="tab-btn" role="tab" onclick="showTab(event,'s3')">
+      <span class="world-label">Scenario 3</span>ISACT · No Brei
+    </button>
+    <button class="tab-btn" role="tab" onclick="showTab(event,'s4')">
+      <span class="world-label">Scenario 4</span>ISACT · Brei Returns
+    </button>
+  </nav>
+
+  <!-- SCENARIO 1 -->
+  <div id="s1" class="tab-panel active">
+    <div class="scenario-title">Scenario 1 — No ISACT, No Brei</div>
+    <div class="scenario-conditions">
+      <span class="badge badge-green">✓ ISACT not renewed</span>
+      <span class="badge badge-red">✗ Brei unavailable</span>
+      <span class="badge badge-gray">★ Prioritized</span>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card highlight"><div class="stat-number">12</div><div class="stat-label">Night-slots available</div></div>
+      <div class="stat-card"><div class="stat-number">360</div><div class="stat-label">Max capacity (30/slot)</div></div>
+      <div class="stat-card"><div class="stat-number">1</div><div class="stat-label">New FT hire needed</div></div>
+      <div class="stat-card caution"><div class="stat-number">+PT</div><div class="stat-label">If enrollment hits 360</div></div>
+    </div>
+    <div style="margin-bottom:32px;">
+      <div class="section-label">Enrollment coverage</div>
+      <div class="cap-wrap"><div class="cap-fill" style="width:86.7%"><div class="cap-target" data-label="415 target"></div></div></div>
+      <div class="cap-legend"><span>0</span><span>360 capacity</span><span>415 target</span></div>
+    </div>
+    <div class="section-label">Staff & night assignments</div>
+    <table class="staff-table">
+      <thead><tr><th>Person</th><th>Nights</th><th style="text-align:center">Slots</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><div class="person-name">Lauren</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Core anchor · 11th grade</td></tr>
+        <tr><td><div class="person-name">Kendrick</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Staying FT ✓ · 8th grade + career programs</td></tr>
+        <tr><td><div class="person-name">Kirsten</div><div class="person-role">Cross-functional</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">2</span></td><td><span class="status-tag status-returning">Returning</span></td><td style="font-size:13px;color:var(--gray-600)">Primary role: Advising</td></tr>
+        <tr><td><div class="person-name">New FT Hire</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot">Th</div></div></td><td style="text-align:center"><span class="night-count">4</span></td><td><span class="status-tag status-new">To hire</span></td><td style="font-size:13px;color:var(--gray-600)">Heaviest load — set expectations at hiring</td></tr>
+        <tr><td><div class="person-name">Brei</div><div class="person-role">—</div></td><td><div class="night-dots"><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count zero">0</span></td><td><span class="status-tag status-na">Not in model</span></td><td style="font-size:13px;color:var(--gray-600)">On leave; not counted</td></tr>
+        <tr class="totals-row"><td><strong>Total</strong></td><td></td><td style="text-align:center"><span class="night-count">12</span></td><td><span class="badge badge-green">360 students</span></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>Fall note</strong>Lauren + New FT Hire carry the program through fall (6 of 12 slots). New hire is load-bearing from day one — strong onboarding is critical.</div>
+    <div class="trigger-box"><strong>PT hire trigger</strong>If enrollment hits 360 confirmed students by late September, bring on a PT manager at 1–2 nights. Identify this person in advance.</div>
+
+    <!-- JOB DESCRIPTIONS -->
+    <div class="jd-section">
+      <div class="jd-section-label">Role Descriptions — Scenario 1 Learning Team</div>
+
+      <!-- CHASITY -->
+      <div class="jd-accordion">
+        <button class="jd-trigger" onclick="toggleJD(this)">
+          <div class="jd-trigger-left">
+            <span class="jd-trigger-badge">Director</span>
+            <div><div class="jd-trigger-name">Chasity</div><div class="jd-trigger-role">Director of Programs</div></div>
+          </div>
+          <span class="jd-chevron">▾</span>
+        </button>
+        <div class="jd-body">
+          <div class="jd-nights-note">📅 0 teaching nights · Full time: strategic leadership, staff development, program systems</div>
+          <div class="jd-overview">
+            This is Chasity's year to lead at full scale. She has spent years earning the knowledge, relationships, and judgment this role demands — and this year, with a fully staffed team and zero teaching nights, she finally has the time and space to apply it. The work ahead isn't new territory for her; it's the work she's been doing in the margins. Now it gets the center.
+            <br><br>
+            The Director of Programs sets direction, develops people, builds the systems that make great programming repeatable, and holds the standard for what a BRYC Fellow's experience should be. Chasity is ready for all of it.
+            <br><br>
+            <em>Note on title level: Whether the role evolves toward Chief of Programs is a question leadership will evaluate together — based on scope, organizational need, and Chasity's continued growth in the dimensions below.</em>
+          </div>
+          <div class="jd-grid">
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Set Strategic Direction</div>
+                <ul class="jd-duty-list">
+                  <li>Define and communicate the vision for BRYC's 8th–11th grade program, ensuring alignment across staff, curriculum, and Fellow experience</li>
+                  <li>Lead the separation of 9th and 10th grade into fully distinct cohorts with grade-appropriate curricula</li>
+                  <li>Drive formalization of Fellow data systems — interest, academic, and postsecondary data captured early, tracked longitudinally, used to inform support; partner with Elin on design and implementation</li>
+                  <li>Define explicit Fellow expectations and communicate them clearly to Fellows, guardians, and staff</li>
+                  <li>Partner with Aareena on curriculum alignment and the rollout of ACT prep into 10th grade in Spring 2027</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Develop and Manage Learning Staff</div>
+                <ul class="jd-duty-list">
+                  <li>Directly manages Lauren, Kendrick, New FT Hire, and Brei (upon return)</li>
+                  <li>Conducts structured 1-1 check-ins focused on OKRAs, facilitation quality, and Fellow engagement</li>
+                  <li>Leads facilitation walkthroughs and peer observations across both campuses — not to evaluate, but to develop</li>
+                  <li>Coaches with specificity: behavior-level facilitation feedback, not just general encouragement</li>
+                  <li>Builds a consistent professional development rhythm for the team — not one-off sessions, but a culture of getting better</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Own Scheduling, Logistics, and Operations</div>
+                <ul class="jd-duty-list">
+                  <li>Leads campus and night assignments based on enrollment data, transportation needs, and staff availability</li>
+                  <li>Partners with Marcus on logistics — transportation, nutrition, physical space, van coordination</li>
+                  <li>Coordinates with Forrest on enrollment tracking and cohort-building timelines</li>
+                  <li>Owns the program calendar — fall retreat, end-of-year Symposium, Saturday programming</li>
+                  <li>Oversee matriculation of incoming 8th–11th grade Fellows — when Fellows are handed off from RAM, ensure no drop in communication or warmth; work with Angela to ensure every new Fellow feels connected from day one</li>
+                  <li>Organize and plan fall orientation in partnership with Angela</li>
+                  <li>Over the summer, finalize what asynchronous participation looks like for extended Fellows — how they still engage virtually (virtual mentors, digital programming, etc.) when they cannot attend in person</li>
+                  <li>Maintains a backup facilitation coverage plan; fills in herself only when no other option exists</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Build and Codify the Program Model</div>
+                <ul class="jd-duty-list">
+                  <li>Drives codification of BRYC's full program model — curriculum, facilitation standards, and Fellow support systems documented and transferable; partner with Elin on curriculum components</li>
+                  <li>Partners with Kendrick to ensure career community programs (Legal Fellows and beyond) scale beyond any one person</li>
+                  <li>Partners with Angela on the mentor program — recruitment, assignment, training, retention</li>
+                  <li>Partners with Jakia to ensure smooth 11th-to-12th grade transitions</li>
+                  <li>Participates in cross-functional leadership conversations; brings program perspective to org-wide decisions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Growth Areas -->
+          <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;padding:20px 24px;margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Growth Areas & Opportunities</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Strengths to Build On</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:var(--green);">✓</span>
+                    Strategic thinker who designs systems and analyzes data effectively
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:var(--green);">✓</span>
+                    Connects naturally with Fellows; manages team with high autonomy
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:var(--green);">✓</span>
+                    Creative problem-solver — builds systems that scale (FYT, BRYC store)
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:var(--green);">✓</span>
+                    Receptive to feedback; eager for strategic thought partnership
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:var(--green);">✓</span>
+                    Relational superpower: uses joy and humor to build Fellow connection and make BRYC fun
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Growth Edges for 2026–2027</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:#92400e;">→</span>
+                    <strong>Organizational visibility:</strong> Don't wait to be asked. Weekly updates, visible initiatives, and strategic thought leadership surfaced unprompted are the markers of a leader ready for expanded scope.
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:#92400e;">→</span>
+                    <strong>Accountability beyond the direct team:</strong> Holding peers and other PMs to electric programming and IFS standards — even when it's uncomfortable — is the work that separates directors from organizational leaders. Build that muscle.
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:#92400e;">→</span>
+                    <strong>Attendance as an organizational metric:</strong> Own the data, own the trends, own the interventions — not just for the learning team but across all programs. This is the non-negotiable leadership indicator.
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:#92400e;">→</span>
+                    <strong>Sustained relational investment:</strong> Strong in the moment; the opportunity is consistency. Visible presence in Fellows' lives beyond program walls — games, events, social media, celebrations — is what IFS looks like at the director level.
+                  </li>
+                  <li style="padding:3px 0 3px 14px;position:relative;">
+                    <span style="position:absolute;left:0;color:#92400e;">→</span>
+                    <strong>Advocacy and presence:</strong> Good work in the background doesn't earn expanded leadership. Speak up, challenge assumptions, bring solutions. Make the impact visible.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-200);font-size:12px;color:var(--gray-500);font-style:italic;">
+              The path to Chief of Programs runs through this year. The question isn't whether Chasity is capable — it's whether she makes that capability visible and extends it beyond her own team. That's the work.
+            </div>
+          </div>
+          <div class="jd-meta">
+            <div class="jd-meta-item"><strong>Nights:</strong> 0 (emergency backup only)</div>
+            <div class="jd-meta-item"><strong>Level:</strong> Director</div>
+            <div class="jd-meta-item"><strong>Reports to:</strong> Elin, Chief of Product</div>
+            <div class="jd-meta-item"><strong>Peer lead:</strong> Aareena</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AAREENA -->
+      <div class="jd-accordion">
+        <button class="jd-trigger" onclick="toggleJD(this)">
+          <div class="jd-trigger-left">
+            <span class="jd-trigger-badge">Director</span>
+            <div><div class="jd-trigger-name">Aareena</div><div class="jd-trigger-role">Director of ACT</div></div>
+          </div>
+          <span class="jd-chevron">▾</span>
+        </button>
+        <div class="jd-body">
+          <div class="jd-nights-note">📅 1 teaching night · ACT curriculum ownership · Saturday ACT prep series</div>
+          <div class="jd-overview">
+            Aareena owns the quality and coherence of ACT instruction across BRYC's out-of-school program. With ACT prep expanding into 10th grade for the first time in Spring 2027, her role is to build a curriculum sequence that carries Fellows from their first exposure in 10th grade through their official ACT in 11th grade — and to ensure every facilitator who touches ACT content (Lauren, New FT Hire, Kirsten, and any subs) is equipped to deliver it well. She also leads BRYC's Saturday ACT Prep series, which generates revenue from the public while giving BRYC Fellows free access. Aareena operates as a peer to Chasity — with regular check-ins and shared ownership of the 10th–11th grade experience — rather than reporting up through the learning team.
+          </div>
+          <div class="jd-grid">
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Own ACT Curriculum Across 10th–11th Grade</div>
+                <ul class="jd-duty-list">
+                  <li>Develop and maintain a cohesive ACT curriculum sequence for 10th and 11th grade, ensuring intentional skill progression year over year; partner with Elin on scope and sequence design</li>
+                  <li>Lead the introduction of ACT prep into 10th grade beginning Spring 2027 — establishing this as Fellows' baseline entering score for 11th grade</li>
+                  <li>Establish instructional consistency across all ACT cohorts; align with Lauren, New FT Hire, Kirsten, and any substitutes on content, pacing, and delivery standards</li>
+                  <li>Explore partnerships (e.g., MasteryPrep) and resources that could strengthen BRYC's ACT programming</li>
+                  <li>Target 17+ as the TOPS floor; BRYC's 21.6 average as the north star</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Build and Support ACT Facilitators</div>
+                <ul class="jd-duty-list">
+                  <li>Ensure Lauren, New FT Hire, Kirsten, and subs are equipped to teach ACT content — not just familiar with it</li>
+                  <li>Develop a facilitator preparation protocol: here's the curriculum, here's how to internalize it, here's what good ACT facilitation looks like at BRYC</li>
+                  <li>Serve as first-call backup when any ACT facilitator is unavailable</li>
+                  <li>Facilitate 1 ACT night per week as a standing commitment, keeping her grounded in the Fellow experience</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Lead Saturday ACT Prep Series</div>
+                <ul class="jd-duty-list">
+                  <li>Design and facilitate 2–3 Saturday ACT Prep series per year (fall, spring, summer) at BRYC's Downtown campus</li>
+                  <li>Public sessions are open to the Baton Rouge community on a paid basis; BRYC Fellows attend at no cost</li>
+                  <li>Determine session format, frequency, and pricing in partnership with leadership</li>
+                  <li>Revenue from public sessions goes directly to BRYC</li>
+                  <li>Recruit Fellows who would most benefit from Saturday sessions ahead of official ACT dates</li>
+                  <li>Other learning staff can teach Saturday sessions for additional pay</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Generate ACT Performance Reports</div>
+                <ul class="jd-duty-list">
+                  <li>Produce semesterly ACT performance reports covering trends, cohort-level results, and year-over-year comparisons — for internal team use, families, district leadership, and funders</li>
+                  <li>Generate on-demand reports when requested by leadership, partners, or grant compliance requirements</li>
+                  <li>Go beyond data extraction: include trend analysis, interpretation, and real-time intervention recommendations so reports drive decisions, not just documentation</li>
+                  <li>Translate ACT data into accessible language for non-technical audiences (families, board members, funders) without losing analytical rigor</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Peer Lead Responsibilities (with Chasity)</div>
+                <ul class="jd-duty-list">
+                  <li>Maintains a regular check-in rhythm with Chasity given their shared ownership of 10th–11th grade Fellow experience</li>
+                  <li>Collaborates on scheduling, cohort assignments, and pacing decisions that affect both ACT and SRL programming</li>
+                  <li>Escalates HR or management items to Josh (COS); escalates curriculum or program matters to Elin (COP)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Growth Areas -->
+          <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;padding:20px 24px;margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Growth Areas & Opportunities</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Strengths to Build On</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Operationally excellent — strong at execution, follow-through, and managing autonomously</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Deep knowledge of what helps Fellows advance on the ACT; results-oriented with genuine commitment to Fellow success</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Receptive to feedback and coachable</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Strong relational connector — builds authentic relationships with Fellows and partners</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Growth Edges for 2026–2027</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Translating intelligence into strategic leadership:</strong> Knowing what works in the room is not the same as building a true pedagogical scope and sequence. The Director of ACT role requires building a coherent, transferable curriculum framework — not just a collection of effective practices.</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Executive-level communication:</strong> Written and verbal communication — emails to partners, reports to funders, proposals to district leadership — must reflect organizational perspective, not just programmatic detail. Polish and precision matter at this level.</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Interpersonal calibration in high-stakes settings:</strong> Directness and authenticity are assets. The growth edge is reading rooms, catching unspoken cues, and adapting approach when finesse is required — especially in partnership development and external meetings.</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Strategic planning rigor:</strong> Shifting from executing plans to driving planning — pre-morteming partner meetings, analyzing what could go wrong, bringing strategic recommendations rather than status updates.</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-200);font-size:12px;color:var(--gray-500);font-style:italic;">
+              The intelligence is there. The growth question for this year is whether Aareena can translate what she knows into a curriculum that works without her in the room, and communicate it in ways that build BRYC's external credibility.
+            </div>
+          </div>
+          <div class="jd-meta">
+            <div class="jd-meta-item"><strong>Nights:</strong> 1 (standing teaching commitment)</div>
+            <div class="jd-meta-item"><strong>Level:</strong> Director</div>
+            <div class="jd-meta-item"><strong>Reports to:</strong> Elin, Chief of Product</div>
+            <div class="jd-meta-item"><strong>Peer lead:</strong> Chasity</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KENDRICK -->
+      <div class="jd-accordion">
+        <button class="jd-trigger" onclick="toggleJD(this)">
+          <div class="jd-trigger-left">
+            <span class="jd-trigger-badge">Manager</span>
+            <div><div class="jd-trigger-name">Kendrick</div><div class="jd-trigger-role">8th Grade Program & Career Communities</div></div>
+          </div>
+          <span class="jd-chevron">▾</span>
+        </button>
+        <div class="jd-body">
+          <div class="jd-nights-note">📅 3 teaching nights/week · 8th grade YPAR · Career community programs</div>
+          <div class="jd-overview">
+            Kendrick owns BRYC's 8th grade experience from end to end — curriculum, facilitation, and the career-connected community ecosystem that makes YPAR real for Fellows. Beyond the classroom, he's BRYC's point person for launching and sustaining programs like Legal Fellows: structured, career-interest communities that connect Fellows to local practitioners and real-world application of their research. The goal isn't one program — it's a replicable model. Legal Fellows is the first proof of concept. Health Fellows, juvenile justice, financial literacy, or whatever emerges next will follow the same framework. Kendrick also provides facilitation coaching to new learning staff — not as a subject matter expert in every curriculum area, but as someone who knows what good BRYC facilitation looks and feels like.
+          </div>
+          <div class="jd-grid">
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Facilitate 8th Grade YPAR</div>
+                <ul class="jd-duty-list">
+                  <li>Teach 8th grade cohort 3 nights/week, targeting 50 Fellows across two cohorts (~25 each)</li>
+                  <li>Lead Fellows through the full YPAR arc: youth voice → community mapping → issue selection → stakeholder engagement → action</li>
+                  <li>Connect research topics to local practitioners as speakers, shadowing hosts, and community partners</li>
+                  <li>Facilitate the end-of-year Symposium capstone</li>
+                  <li>Maintain Fellow engagement through individualized outreach on attendance, grades, and mentor relationships</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Launch and Sustain Career Community Programs</div>
+                <ul class="jd-duty-list">
+                  <li>Serve as BRYC's point person for Legal Fellows (Year 1) — coordinate four Saturday sessions with the District Attorney's Office, support Fellows in leading the capstone community forum</li>
+                  <li>Build a replicable framework so future career communities (Health Fellows, financial literacy, juvenile justice, etc.) can be stood up with minimal additional overhead</li>
+                  <li>Identify community partners — business owners, nonprofit leaders, legal and healthcare professionals — who can anchor future communities</li>
+                  <li>In partnership with Chasity, shape the broader "communities" framework across all grades</li>
+                  <li>Recruit Fellows into career communities; manage applications and logistics</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Instructional Support for Learning Team</div>
+                <ul class="jd-duty-list">
+                  <li>Provide facilitation coaching to new learning staff — call-and-response, Fellow engagement, pacing, energy management, classroom culture</li>
+                  <li>Conduct periodic observations of other cohorts with structured feedback</li>
+                  <li>Lead monthly facilitation development sessions for the full learning team</li>
+                  <li>Model lesson internalization: review → anticipate misconceptions → scaffold → deliver</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Codify YPAR Curriculum</div>
+                <ul class="jd-duty-list">
+                  <li>Complete full codification of YPAR curriculum into a transferable, unit-based format by end of summer; partner with Elin on curriculum structure and standards</li>
+                  <li>Ensure all materials are "Kendrick-agnostic" — any qualified facilitator can pick them up</li>
+                  <li>Incorporate current cultural references; avoid generic filler content</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Fellow & Family Engagement (IFS)</div>
+                <ul class="jd-duty-list">
+                  <li>Maintain weekly outreach rhythm: guardian memos, absent Fellow texts, CA follow-up</li>
+                  <li>Support fall retreat and end-of-year Symposium planning</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Growth Areas -->
+          <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;padding:20px 24px;margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Growth Areas & Opportunities</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Strengths to Build On</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Exceptional facilitator with a distinct, effective style that Fellows respond to</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Genuine vision for connecting YPAR to real community work — not just content delivery</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Strong community relationships and instinct for the right partners</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Natural coach — already thinking about how to develop new staff, not just his own cohort</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Growth Edges for 2026–2027</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Codification and transferability:</strong> The YPAR curriculum works because Kendrick runs it. The growth edge is making it work without him — fully documented, unit-based, and internalized by someone who has never seen him teach.</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Scaling the community program model:</strong> Legal Fellows is year one of a framework, not a one-off. The test is whether a second community (Health Fellows, financial literacy, juvenile justice) launches using the same structure with minimal additional design from Kendrick.</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Instructional coaching breadth:</strong> Coaching facilitation culture and call-and-response is a strength. The next step is developing the muscle to coach across curriculum areas he hasn't personally facilitated — with humility and specificity, not just general feedback.</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-200);font-size:12px;color:var(--gray-500);font-style:italic;">
+              [Space for additional notes from Josh / leadership]
+            </div>
+          </div>
+          <div class="jd-meta">
+            <div class="jd-meta-item"><strong>Nights:</strong> 3</div>
+            <div class="jd-meta-item"><strong>Grade:</strong> 8th (YPAR)</div>
+            <div class="jd-meta-item"><strong>Level:</strong> Manager</div>
+            <div class="jd-meta-item"><strong>Compensation range:</strong> $62–68K</div>
+            <div class="jd-meta-item"><strong>Reports to:</strong> Chasity</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAUREN -->
+      <div class="jd-accordion">
+        <button class="jd-trigger" onclick="toggleJD(this)">
+          <div class="jd-trigger-left">
+            <span class="jd-trigger-badge">Manager</span>
+            <div><div class="jd-trigger-name">Lauren</div><div class="jd-trigger-role">Learning Manager — 11th Grade & Health Fellows</div></div>
+          </div>
+          <span class="jd-chevron">▾</span>
+        </button>
+        <div class="jd-body">
+          <div class="jd-nights-note">📅 3 teaching nights/week · 11th grade ACT/WorkKeys · Health Fellows program</div>
+          <div class="jd-overview">
+            Lauren anchors the 11th grade ACT/WorkKeys experience and serves as the fall program's senior continuity — the experienced presence a new hire can lean on while finding their footing. She also owns whatever Health Fellows becomes: the natural heir to the Wolfpack Academy partnership, which is stepping back from its current format but wants to stay connected. Lauren takes that relationship and that energy and builds something that works for BRYC and for the Fellows who would benefit from a health-career focused community. Like Legal Fellows under Kendrick, this is about more than one program — it's about Lauren owning a pipeline into health careers that can grow over time.
+          </div>
+          <div class="jd-grid">
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Facilitate 11th Grade ACT/WorkKeys</div>
+                <ul class="jd-duty-list">
+                  <li>Teach 11th grade cohort 3 nights/week, targeting ~30 Fellows per slot</li>
+                  <li>Deliver ACT content and test-day strategy using BRYC's codified curriculum; internalize and adapt — not just execute — lessons</li>
+                  <li>Target the 17+ ACT threshold for TOPS access as the floor; BRYC's 21.6 average as the north star</li>
+                  <li>Coordinate with Aareena on curriculum alignment and pacing across grades</li>
+                  <li>Available to facilitate Saturday ACT Prep sessions for additional pay</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Own Health Fellows / Health Career Community</div>
+                <ul class="jd-duty-list">
+                  <li>Serve as BRYC's point person for the Wolfpack Academy relationship — maintain the connection as they transition away from their current program format</li>
+                  <li>Explore what a health career community looks like for BRYC Fellows: structured sessions, practitioner speakers, hospital or clinic shadowing, credential pathways</li>
+                  <li>Coordinate the radiology training program pipeline at Lady of the Lake for graduating seniors</li>
+                  <li>Use Kendrick's Legal Fellows framework as a model; adapt it for healthcare and health-related career paths</li>
+                  <li>Recruit Fellows who have expressed interest in health careers; manage applications and logistics</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Fall Anchor Responsibilities</div>
+                <ul class="jd-duty-list">
+                  <li>Serve as the experienced peer for the new FT hire through fall — informal orientation, model facilitation, cultural onboarding</li>
+                  <li>Help new staff understand BRYC's facilitation standards and Fellow culture before Chasity formalizes coaching</li>
+                  <li>Flag integration concerns early rather than absorbing friction silently</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Fellow & Family Engagement (IFS)</div>
+                <ul class="jd-duty-list">
+                  <li>Maintain weekly outreach rhythm: guardian memos, absent Fellow texts, CA follow-up</li>
+                  <li>Build and maintain mentor relationships within cohort</li>
+                  <li>Flag high-need Fellows early to Chasity and Persistence team</li>
+                  <li>Participate in team meetings, facilitation development sessions, post-mortems, and retreat planning</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Growth Areas -->
+          <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;padding:20px 24px;margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Growth Areas & Opportunities</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Strengths to Build On</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Deep ACT/WorkKeys facilitation experience — BRYC's institutional anchor for 11th grade</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Steady, reliable presence that Fellows and new staff can lean on</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">✓</span>Strong IFS instincts — genuinely invested in Fellows beyond program walls</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Growth Edges for 2026–2027</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Health Fellows ownership:</strong> Taking the Wolfpack Academy relationship and building something real out of it — not just maintaining a connection, but designing a program that Fellows want to be in and that produces a clear pathway into health careers.</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Informal mentorship of new staff:</strong> As the most experienced facilitator on the team, Lauren has the opportunity to model what excellent BRYC instruction looks and feels like. Making that influence intentional — not just by example but through conversation — is the senior manager growth edge.</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span><strong>Program ownership beyond facilitation:</strong> The next level isn't more nights — it's owning something that compounds. Health Fellows is that opportunity.</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-200);font-size:12px;color:var(--gray-500);font-style:italic;">
+              [Space for additional notes from Josh / leadership]
+            </div>
+          </div>
+          <div class="jd-meta">
+            <div class="jd-meta-item"><strong>Nights:</strong> 3</div>
+            <div class="jd-meta-item"><strong>Grade:</strong> 11th (ACT/WorkKeys)</div>
+            <div class="jd-meta-item"><strong>Level:</strong> Manager</div>
+            <div class="jd-meta-item"><strong>Reports to:</strong> Chasity</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW FT HIRE -->
+      <div class="jd-accordion">
+        <button class="jd-trigger" onclick="toggleJD(this)">
+          <div class="jd-trigger-left">
+            <span class="jd-trigger-badge">Manager · To Hire</span>
+            <div><div class="jd-trigger-name">New FT Learning Manager</div><div class="jd-trigger-role">9th/10th Grade · 4 Nights</div></div>
+          </div>
+          <span class="jd-chevron">▾</span>
+        </button>
+        <div class="jd-body">
+          <div class="jd-nights-note">📅 4 teaching nights/week · 9th–10th grade (SRL) cohort · Heaviest teaching load on the team</div>
+          <div class="jd-overview">
+            This is BRYC's most critical hire for 2026–2027. The new Learning Manager owns the 9th–10th grade Self-Regulated Learning experience across four nights per week — the heaviest facilitation commitment on the team. Because Brei is on leave through most of the fall, this person needs to run independently from day one. Lauren is a peer resource and Chasity provides coaching and observation, but there is no co-facilitator. The right hire brings facilitation confidence, relational warmth with high schoolers, and the discipline to internalize a curriculum rather than wing it. They'll also need to be comfortable teaching ACT content — Aareena will equip them, but the willingness has to be there from the start.
+          </div>
+          <div class="jd-grid">
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Facilitate 9th–10th Grade SRL</div>
+                <ul class="jd-duty-list">
+                  <li>Teach 9th–10th grade cohort 4 nights/week, targeting ~30 Fellows per slot across up to 4 cohorts</li>
+                  <li>Deliver BRYC's SRL curriculum: effective studying, time management, self-advocacy, and academic identity</li>
+                  <li>Internalize lessons thoroughly — anticipate misconceptions, prepare scaffolds, adapt to the room</li>
+                  <li>Maintain small-cohort culture (10–15 ideal for SRL homework time); manage mentor presence within sessions</li>
+                  <li>Coordinate with Kendrick on 8th→9th grade transitions</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">ACT Facilitation Readiness</div>
+                <ul class="jd-duty-list">
+                  <li>Learn and be prepared to facilitate ACT content — Aareena will provide curriculum and onboarding</li>
+                  <li>Available as ACT backup facilitator when needed</li>
+                  <li>Available to facilitate Saturday ACT Prep sessions for additional pay</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">What We're Looking For</div>
+                <ul class="jd-duty-list">
+                  <li>Prior facilitation or teaching experience with adolescents — after-school or community setting preferred</li>
+                  <li>Comfort with a structured but dynamic curriculum — not scripted, not ad-libbed</li>
+                  <li>Relational approach: builds trust quickly, especially with 9th graders navigating their first year of high school</li>
+                  <li>Organized and proactive with family communication</li>
+                  <li>Can operate independently in fall while actively seeking coaching</li>
+                  <li>Genuinely excited about youth development as a field</li>
+                  <li>Open to learning and teaching ACT content alongside SRL</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Fellow & Family Engagement (IFS)</div>
+                <ul class="jd-duty-list">
+                  <li>Maintain weekly outreach rhythm: guardian memos, absent Fellow texts, CA follow-up</li>
+                  <li>Build mentor relationships within cohort; track engagement and flag concerns early</li>
+                  <li>Participate in team meetings, facilitation development sessions, and post-mortems</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Growth Areas -->
+          <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;padding:20px 24px;margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Growth Areas & Opportunities</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Strengths to Identify</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--gray-400);">–</span><em style="color:var(--gray-400);">To be completed after hire</em></li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--black);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Year One Growth Markers</div>
+                <ul style="list-style:none;font-size:12px;color:var(--gray-600);line-height:1.6;">
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span>9th and 10th grade cohorts retained through the full year</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span>Fellow engagement data trending positively by second semester</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span>Facilitation style clearly BRYC's — not just their own</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span>Actively seeks coaching rather than waiting for it</li>
+                  <li style="padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;">→</span>ACT-ready by spring semester</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-200);font-size:12px;color:var(--gray-500);font-style:italic;">
+              A strong year one sets up a significantly expanded role in year two. We're hiring this person to grow.
+            </div>
+          </div>
+          <div class="jd-meta">
+            <div class="jd-meta-item"><strong>Nights:</strong> 4 (M–Th)</div>
+            <div class="jd-meta-item"><strong>Grade:</strong> 9th–10th (SRL)</div>
+            <div class="jd-meta-item"><strong>Level:</strong> Manager</div>
+            <div class="jd-meta-item"><strong>Reports to:</strong> Chasity</div>
+            <div class="jd-meta-item"><strong>Note:</strong> Compensation should reflect 4-night load</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BREI -->
+      <div class="jd-accordion">
+        <button class="jd-trigger" onclick="toggleJD(this)">
+          <div class="jd-trigger-left">
+            <span class="jd-trigger-badge">If/When Returns</span>
+            <div><div class="jd-trigger-name">Brei</div><div class="jd-trigger-role">Learning Associate — Instructional Coach, Facilitator & RAM Support</div></div>
+          </div>
+          <span class="jd-chevron">▾</span>
+        </button>
+        <div class="jd-body">
+          <div class="jd-nights-note">📅 1 teaching night · Instructional coaching · RAM support · Out most of fall on leave</div>
+          <div class="jd-overview">
+            Brei's return is planned for spring, and when she comes back, her role is meaningfully different from what it was before her leave. She's not stepping back into a full facilitation load — she's stepping into a hybrid role that plays to her strengths and gives her time to contribute in ways that compound across the whole team. One night of facilitation eases her back in without overwhelming. Instructional coaching work amplifies Kendrick's efforts and gives Chasity a second set of eyes on the team. And RAM support adds operational value in a place the program needs it.
+          </div>
+          <div class="jd-grid">
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Instructional Coaching</div>
+                <ul class="jd-duty-list">
+                  <li>Partner with Kendrick on facilitation development for the learning team — observations, structured feedback, and coaching conversations with new staff</li>
+                  <li>Bring a complementary coaching lens to Kendrick's: where he focuses on BRYC culture and call-and-response, Brei brings curriculum internalization and instructional technique</li>
+                  <li>Participate in monthly facilitation development sessions; co-facilitate or present on specific facilitation skills</li>
+                  <li>Support Chasity's walkthrough cadence as a second observer when available</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Facilitate One Program Night</div>
+                <ul class="jd-duty-list">
+                  <li>Own one cohort night per week upon return — specific grade and cohort TBD based on enrollment and scheduling at time of return</li>
+                  <li>Ramp into facilitation gradually; Chasity and Kendrick provide support and observation during the transition back</li>
+                  <li>Maintain IFS duties for her cohort: guardian outreach, absent Fellow follow-up, mentor coordination</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">RAM Support</div>
+                <ul class="jd-duty-list">
+                  <li>Provide support for Relationship and Attendance Management (RAM) systems — tracking Fellow engagement data, flagging at-risk patterns, and ensuring no Fellow falls through the cracks</li>
+                  <li>Works alongside IFS staff and Chasity to maintain the integrity of Fellow data across the learning team</li>
+                  <li>Specific RAM responsibilities to be scoped in partnership with Chasity before Brei's return</li>
+                </ul>
+              </div>
+              <div class="jd-duty-group">
+                <div class="jd-duty-title">Growth Trajectory</div>
+                <ul class="jd-duty-list">
+                  <li>Brei's return is a fresh start with a broader scope than her previous role — and a chance to grow into a senior position on the learning team over time</li>
+                  <li>The instructional coaching work in particular is a natural path toward a more formal leadership role as the team scales</li>
+                  <li>Fall 2027 role to be determined based on her spring reintegration and the team's needs going into the next year</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="jd-meta">
+            <div class="jd-meta-item"><strong>Nights:</strong> 1 (spring only)</div>
+            <div class="jd-meta-item"><strong>Level:</strong> Associate</div>
+            <div class="jd-meta-item"><strong>Reports to:</strong> Chasity</div>
+            <div class="jd-meta-item"><strong>Availability:</strong> Out most of fall; spring return</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end jd-section -->
+  </div><!-- end s1 -->
+
+  <!-- SCENARIO 2 -->
+  <div id="s2" class="tab-panel">
+    <div class="scenario-title">Scenario 2 — No ISACT, Brei Returns</div>
+    <div class="scenario-conditions">
+      <span class="badge badge-green">✓ ISACT not renewed</span>
+      <span class="badge badge-green">✓ Brei returns FT</span>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card highlight"><div class="stat-number">13</div><div class="stat-label">Night-slots available</div></div>
+      <div class="stat-card"><div class="stat-number">390</div><div class="stat-label">Max capacity (30/slot)</div></div>
+      <div class="stat-card"><div class="stat-number">1</div><div class="stat-label">New FT hire needed</div></div>
+      <div class="stat-card highlight"><div class="stat-number">✓</div><div class="stat-label">Most comfortable scenario</div></div>
+    </div>
+    <div style="margin-bottom:32px;">
+      <div class="section-label">Enrollment coverage</div>
+      <div class="cap-wrap"><div class="cap-fill" style="width:94%"><div class="cap-target" data-label="415 target"></div></div></div>
+      <div class="cap-legend"><span>0</span><span>390 capacity</span><span>415 target</span></div>
+    </div>
+    <div class="section-label">Staff & night assignments</div>
+    <table class="staff-table">
+      <thead><tr><th>Person</th><th>Nights</th><th style="text-align:center">Slots</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><div class="person-name">Lauren</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Core anchor</td></tr>
+        <tr><td><div class="person-name">Kendrick</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Staying FT ✓</td></tr>
+        <tr><td><div class="person-name">Kirsten</div><div class="person-role">Cross-functional</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">2</span></td><td><span class="status-tag status-returning">Returning</span></td><td style="font-size:13px;color:var(--gray-600)">Primary role: Advising</td></tr>
+        <tr><td><div class="person-name">New FT Hire</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot">Th</div></div></td><td style="text-align:center"><span class="night-count">4</span></td><td><span class="status-tag status-new">To hire</span></td><td style="font-size:13px;color:var(--gray-600)">Set expectations at hiring</td></tr>
+        <tr><td><div class="person-name">Brei</div><div class="person-role">Learning Associate</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">1</span></td><td><span class="status-tag status-upside">Upside</span></td><td style="font-size:13px;color:var(--gray-600)">Out most of fall; spring only</td></tr>
+        <tr class="totals-row"><td><strong>Total</strong></td><td></td><td style="text-align:center"><span class="night-count">13</span></td><td><span class="badge badge-green">390 students</span></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>Fall note</strong>Treat fall as Scenario 1 — Brei's slot is spring upside only.</div>
+    <div class="trigger-box"><strong>No additional hire needed</strong>At 13 slots you're within striking distance of 415, and Brei provides genuine spring cushion.</div>
+  </div>
+
+  <!-- SCENARIO 3 -->
+  <div id="s3" class="tab-panel">
+    <div class="scenario-title">Scenario 3 — ISACT Continues, No Brei</div>
+    <div class="scenario-conditions">
+      <span class="badge badge-red">✗ ISACT renewed — Kirsten in schools</span>
+      <span class="badge badge-red">✗ Brei unavailable</span>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card warning"><div class="stat-number">10</div><div class="stat-label">Night-slots available</div></div>
+      <div class="stat-card warning"><div class="stat-number">300</div><div class="stat-label">Max capacity (30/slot)</div></div>
+      <div class="stat-card warning"><div class="stat-number">2+</div><div class="stat-label">New FT hires needed</div></div>
+      <div class="stat-card warning"><div class="stat-number">–115</div><div class="stat-label">Gap vs. 415 target</div></div>
+    </div>
+    <div style="margin-bottom:32px;">
+      <div class="section-label">Enrollment coverage</div>
+      <div class="cap-wrap"><div class="cap-fill" style="width:72.3%;background:#b91c1c;"><div class="cap-target" data-label="415 target"></div></div></div>
+      <div class="cap-legend"><span>0</span><span>300 capacity</span><span>415 target</span></div>
+    </div>
+    <div class="section-label">Staff & night assignments</div>
+    <table class="staff-table">
+      <thead><tr><th>Person</th><th>Nights</th><th style="text-align:center">Slots</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><div class="person-name">Lauren</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Core anchor</td></tr>
+        <tr><td><div class="person-name">Kendrick</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Staying FT ✓</td></tr>
+        <tr><td><div class="person-name">New FT Hire</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot">Th</div></div></td><td style="text-align:center"><span class="night-count">4</span></td><td><span class="status-tag status-new">To hire</span></td><td style="font-size:13px;color:var(--gray-600)">Required</td></tr>
+        <tr><td><div class="person-name">Kirsten</div><div class="person-role">ISACT Instructor</div></td><td><div class="night-dots"><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count zero">0</span></td><td><span class="status-tag status-na">In schools</span></td><td style="font-size:13px;color:var(--gray-600)">Same as current year</td></tr>
+        <tr><td><div class="person-name">Brei</div><div class="person-role">—</div></td><td><div class="night-dots"><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count zero">0</span></td><td><span class="status-tag status-na">Not in model</span></td><td style="font-size:13px;color:var(--gray-600)">On leave</td></tr>
+        <tr class="totals-row"><td><strong>Total</strong></td><td></td><td style="text-align:center"><span class="night-count">10</span></td><td><span class="badge badge-red">300 students · –115 gap</span></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box" style="background:#fef2f2;border-color:#fecaca;color:#7f1d1d;"><strong style="color:#991b1b;">Most constrained scenario</strong>Without Kirsten, you need at least one additional FT hire to approach 415. Chasity becomes load-bearing by default.</div>
+  </div>
+
+  <!-- SCENARIO 4 -->
+  <div id="s4" class="tab-panel">
+    <div class="scenario-title">Scenario 4 — ISACT Continues, Brei Returns</div>
+    <div class="scenario-conditions">
+      <span class="badge badge-red">✗ ISACT renewed — Kirsten in schools</span>
+      <span class="badge badge-green">✓ Brei returns FT</span>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card caution"><div class="stat-number">11</div><div class="stat-label">Night-slots available</div></div>
+      <div class="stat-card caution"><div class="stat-number">330</div><div class="stat-label">Max capacity (30/slot)</div></div>
+      <div class="stat-card"><div class="stat-number">1–2</div><div class="stat-label">New FT hires needed</div></div>
+      <div class="stat-card caution"><div class="stat-number">–85</div><div class="stat-label">Gap vs. 415 target</div></div>
+    </div>
+    <div style="margin-bottom:32px;">
+      <div class="section-label">Enrollment coverage</div>
+      <div class="cap-wrap"><div class="cap-fill" style="width:79.5%;background:#92400e;"><div class="cap-target" data-label="415 target"></div></div></div>
+      <div class="cap-legend"><span>0</span><span>330 capacity</span><span>415 target</span></div>
+    </div>
+    <div class="section-label">Staff & night assignments</div>
+    <table class="staff-table">
+      <thead><tr><th>Person</th><th>Nights</th><th style="text-align:center">Slots</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><div class="person-name">Lauren</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Core anchor</td></tr>
+        <tr><td><div class="person-name">Kendrick</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">3</span></td><td><span class="status-tag status-returning">Returning FT</span></td><td style="font-size:13px;color:var(--gray-600)">Staying FT ✓</td></tr>
+        <tr><td><div class="person-name">New FT Hire</div><div class="person-role">Learning Manager</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot">T</div><div class="dot">W</div><div class="dot">Th</div></div></td><td style="text-align:center"><span class="night-count">4</span></td><td><span class="status-tag status-new">To hire</span></td><td style="font-size:13px;color:var(--gray-600)">Required</td></tr>
+        <tr><td><div class="person-name">Brei</div><div class="person-role">Learning Associate</div></td><td><div class="night-dots"><div class="dot">M</div><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count">1</span></td><td><span class="status-tag status-upside">Upside</span></td><td style="font-size:13px;color:var(--gray-600)">Spring only; out most of fall</td></tr>
+        <tr><td><div class="person-name">Kirsten</div><div class="person-role">ISACT Instructor</div></td><td><div class="night-dots"><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div><div class="dot empty">–</div></div></td><td style="text-align:center"><span class="night-count zero">0</span></td><td><span class="status-tag status-na">In schools</span></td><td style="font-size:13px;color:var(--gray-600)">Same as current year</td></tr>
+        <tr class="totals-row"><td><strong>Total</strong></td><td></td><td style="text-align:center"><span class="night-count">11</span></td><td><span class="badge badge-red">330 students · –85 gap</span></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>Gap note</strong>Brei's 1 night helps in spring but doesn't close the gap. One additional hire at 2–3 nights closes it.</div>
+    <div class="trigger-box"><strong>To close the gap</strong>One additional hire at 2–3 nights (FT or strong PT) brings capacity to 390–420.</div>
+  </div>
+
+</div>
+
+<script>
+function showTab(e,id){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');e.currentTarget.classList.add('active');}
+function toggleJD(btn){const body=btn.nextElementSibling;const isOpen=btn.classList.contains('open');document.querySelectorAll('.jd-trigger').forEach(t=>t.classList.remove('open'));document.querySelectorAll('.jd-body').forEach(b=>b.classList.remove('open'));if(!isOpen){btn.classList.add('open');body.classList.add('open');}}
+</script>
+</body>
+</html>
