@@ -1435,27 +1435,23 @@
 
         function render(){
           var canvas=document.getElementById('oc-canvas');
-          [].slice.call(canvas.querySelectorAll('.pc')).forEach(function(e){e.remove();});
-          vis().forEach(function(p){
-            var gp=gpos(p);
-            var title=userTitles[p.id]||p.t;
-            var hasUserNote=(userNotes[p.id]!==undefined&&userNotes[p.id]!=='');
-            var note=hasUserNote?userNotes[p.id]:(p.notes||'');
-            var hasNote=!!(note);
-            var col=TC[p.tm]||'#555';
-            var tc=['#f0c917'].indexOf(col)>-1?'#333':'#fff';
-            var div=document.createElement('div');
-            div.className='pc'+(hasNote?' hasnote':'');
-            div.id='pc-'+p.id;
-            div.style.left=gp.x+'px';
-            div.style.top=gp.y+'px';
-            var nb=p.nt?('<div class="pnights" style="background:'+col+';color:'+tc+'">'+p.nt+'</div>'):'';
-            div.innerHTML='<div class="av" style="background:'+col+';color:'+tc+'"><div class="nring" style="border-color:'+col+'"></div><div class="ndot"></div>'+ini(p.n)+'</div><div class="pname">'+p.n+'</div><div class="ptitle">'+title+'</div>'+nb+'<button class="edbtn" onclick="ocOpenModal(\''+p.id+'\')">Edit</button>';
-            drag(div,p);
-            canvas.appendChild(div);
-          });
-          lines();
-        }
+          document.querySelectorAll('nav a').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    var href = this.getAttribute('href');
+
+    // If it's a jump link (starts with #), do the smooth scroll
+    if (href.startsWith('#')) {
+      e.preventDefault(); 
+      var target = document.querySelector(href);
+      if (target) {
+        var offset = 72;
+        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    } 
+    // Otherwise, do nothing! The browser will follow the link naturally.
+  });
+});
 
         function lines(){
           var svg=document.getElementById('oc-svg');
