@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Org Chart · 2026–2027 · BRYC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#0a0a0a;--white:#fff;--green:#1B4332;--gold:#B8860B;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+  --gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;
+  --gold-light:#fef9c3;--blue-100:#dbeafe;--blue-800:#1e3a8a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--black);line-height:1.5;}
+
+.site-header{background:var(--black);padding:20px 40px;display:flex;align-items:center;gap:16px;}
+.logo-circle{width:44px;height:44px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--black);flex-shrink:0;}
+.site-header h1{color:white;font-size:15px;font-weight:500;}
+.site-header h1 span{color:var(--gray-400);font-weight:300;}
+
+.page-wrap{max-width:1400px;margin:0 auto;padding:48px 40px 80px;}
+.page-eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;}
+.page-title{font-size:32px;font-weight:700;margin-bottom:6px;}
+.page-subtitle{font-size:15px;color:var(--gray-500);font-weight:300;margin-bottom:28px;}
+
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:36px;align-items:center;}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--gray-500);}
+.ls{width:22px;height:13px;border-radius:3px;}
+.ld{width:28px;border-top:2px dashed;}
+
+/* ── Node ── */
+.node{border-radius:7px;padding:9px 13px;text-align:center;display:inline-flex;flex-direction:column;align-items:center;min-width:130px;}
+.node .nb{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;opacity:.75;}
+.node .nn{font-size:12px;font-weight:700;line-height:1.25;}
+.node .nt{font-size:10px;line-height:1.3;margin-top:2px;opacity:.75;}
+.node .nnt{font-size:9px;margin-top:3px;font-style:italic;opacity:.65;}
+.node .teach{font-size:9px;background:#dcfce7;color:#14532d;border-radius:3px;padding:2px 5px;margin-top:3px;}
+.n-ceo{background:var(--black);color:white;}
+.n-chief{background:var(--green);color:white;}
+.n-dir{background:white;color:var(--black);border:2px solid var(--green);}
+.n-mgr{background:white;color:var(--black);border:2px solid var(--gray-300);}
+.n-pt{background:var(--gray-100);color:var(--gray-600);border:2px dashed var(--gray-300);}
+.n-alum{background:var(--blue-100);color:var(--blue-800);border:2px dashed #93c5fd;}
+.n-hire{background:white;color:var(--black);border:2px dashed var(--gray-300);}
+
+/* ── Connectors ── */
+.vl{width:2px;background:var(--gray-300);margin:0 auto;}
+.hl{height:2px;background:var(--gray-300);}
+.col{display:flex;flex-direction:column;align-items:center;}
+.row{display:flex;align-items:flex-start;}
+
+/* ── VERTICAL CHART ── */
+.chart{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:40px 32px 48px;margin-bottom:40px;}
+
+/* Top: Lucas centered */
+.top-ceo{display:flex;justify-content:center;margin-bottom:0;}
+
+/* Chiefs row */
+.chiefs-row{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:0;}
+.chief-col{display:flex;flex-direction:column;align-items:center;}
+
+/* Tier toggle button */
+.tier-btn{background:none;border:none;cursor:pointer;width:100%;display:flex;align-items:center;gap:8px;padding:6px 0;font-family:inherit;margin-top:12px;}
+.tier-btn .tl{flex:1;height:1px;background:var(--gray-200);}
+.tier-btn span{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-400);white-space:nowrap;}
+.tier-content{width:100%;}
+
+/* Director row inside a chief col */
+.dir-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;position:relative;padding-top:0;margin-top:0;}
+.dir-row::before{content:'';position:absolute;top:0;left:10%;right:10%;height:2px;background:var(--gray-300);}
+.dir-entry{display:flex;flex-direction:column;align-items:center;}
+
+/* Manager row inside a dir-entry */
+.mgr-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;position:relative;padding-top:0;margin-top:0;}
+.mgr-row::before{content:'';position:absolute;top:0;left:5%;right:5%;height:2px;background:var(--gray-300);}
+.mgr-entry{display:flex;flex-direction:column;align-items:center;}
+
+/* Peer line */
+.peer-row{display:flex;align-items:center;justify-content:center;gap:0;margin:8px 0;}
+.peer-chip{font-size:10px;font-weight:700;color:var(--gold);background:var(--gold-light);border:1px solid var(--gold);border-radius:4px;padding:3px 8px;}
+.peer-dash{border-top:2px dashed var(--gold);width:14px;}
+.peer-word{font-size:9px;color:var(--gold);font-weight:700;padding:0 3px;letter-spacing:.04em;}
+
+/* Chief vertical connector to its dir-row */
+.chief-to-dirs{width:2px;height:20px;background:var(--gray-300);margin:0 auto;}
+
+/* Notes */
+.notes-section{background:white;border:1px solid var(--gray-200);border-radius:10px;padding:28px 32px;margin-bottom:40px;}
+.notes-title{font-size:18px;font-weight:700;color:var(--black);margin-bottom:20px;}
+.notes-group{margin-bottom:24px;}
+.notes-group:last-child{margin-bottom:0;}
+.notes-group-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--gray-100);}
+.note-item{display:flex;gap:12px;margin-bottom:10px;font-size:13px;color:var(--gray-600);line-height:1.6;}
+.note-item:last-child{margin-bottom:0;}
+.note-dot{width:6px;height:6px;background:var(--green);border-radius:50%;margin-top:7px;flex-shrink:0;}
+
+/* Rubric */
+.rubric-wrap{margin-top:48px;}
+.rubric-title{font-size:22px;font-weight:700;margin-bottom:6px;}
+.rubric-sub{font-size:14px;color:var(--gray-500);font-weight:300;margin-bottom:28px;}
+.rubric-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.rc{border-radius:10px;overflow:hidden;}
+.rc-head{padding:18px 20px 14px;}
+.rc-head .lvlbdg{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:6px;}
+.rc-head h3{font-size:20px;font-weight:700;}
+.rc-head .rng{font-size:12px;opacity:.7;margin-top:4px;font-family:'DM Mono',monospace;}
+.rc-body{padding:16px 20px 20px;background:white;}
+.rc.mgr .rc-head{background:var(--gray-100);}
+.rc.dir .rc-head{background:var(--green);color:white;}
+.rc.ch .rc-head{background:var(--black);color:white;}
+.rdim{margin-bottom:14px;}
+.rdim-name{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;}
+.rc.mgr .rdim-name{color:var(--gray-500);}
+.rc.dir .rdim-name{color:var(--green);}
+.rc.ch .rdim-name{color:var(--black);}
+.rdim-text{font-size:12px;color:var(--gray-600);line-height:1.6;}
+/* Collapsible sections */
+.section-wrap { margin-top: 40px; }
+.section-header-btn { width:100%;background:white;border:1px solid var(--gray-200);border-radius:10px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s; }
+.section-header-btn:hover { background:var(--gray-50); }
+.section-header-btn.open { border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom-color:var(--gray-100); }
+.section-header-btn .sh-left { display:flex;flex-direction:column;align-items:flex-start;gap:3px; }
+.section-header-btn .sh-title { font-size:18px;font-weight:700;color:var(--black); }
+.section-header-btn .sh-sub { font-size:13px;color:var(--gray-500);font-weight:300; }
+.section-header-btn .sh-arrow { font-size:18px;color:var(--gray-400);transition:transform .2s;flex-shrink:0; }
+.section-header-btn.open .sh-arrow { transform:rotate(180deg); }
+.section-body { display:none;background:white;border:1px solid var(--gray-200);border-top:none;border-radius:0 0 10px 10px;padding:28px 32px; }
+.section-body.open { display:block;animation:sectionFade .2s ease; }
+@keyframes sectionFade { from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:translateY(0);} }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-circle">BRYC</div>
+  <h1>Org Chart <span>· 2026–2027 · Scenario 1</span></h1>
+</header>
+
+<div class="page-wrap">
+  <p class="page-eyebrow">Planning · Internal</p>
+  <h1 class="page-title">Organizational Structure</h1>
+  <p class="page-subtitle">Based on Scenario 1 (prioritized). Reflects planned hires and role changes for 2026–2027.</p>
+
+  <div class="legend">
+    <div class="legend-item"><div class="ls" style="background:var(--black)"></div>CEO</div>
+    <div class="legend-item"><div class="ls" style="background:var(--green)"></div>Chief</div>
+    <div class="legend-item"><div class="ls" style="background:white;border:2px solid var(--green);border-radius:3px"></div>Director</div>
+    <div class="legend-item"><div class="ls" style="background:white;border:2px solid var(--gray-300);border-radius:3px"></div>Manager</div>
+    <div class="legend-item"><div class="ls" style="background:var(--gray-100);border:2px dashed var(--gray-300);border-radius:3px"></div>Part-Time / Stipend</div>
+    <div class="legend-item"><div class="ld" style="border-color:var(--gold)"></div><span style="color:var(--gold);font-weight:600;">Peer lead relationship</span></div>
+  </div>
+
+  <div class="chart">
+
+    <!-- CEO -->
+    <div class="top-ceo">
+      <div class="col">
+        <div class="node n-ceo" style="min-width:180px;">
+          <span class="nb">CEO</span>
+          <div class="nn">Lucas</div>
+          <div class="nt">Chief Executive Officer</div>
+        </div>
+        <div class="vl" style="height:20px;"></div>
+        <!-- Alyson under CEO -->
+        <div class="node n-dir" style="min-width:160px;">
+          <span class="nb" style="color:#14532d;">Director</span>
+          <div class="nn">Alyson</div>
+          <div class="nt">Director of Development</div>
+        </div>
+        <div class="vl" style="height:20px;"></div>
+      </div>
+    </div>
+
+    <!-- Horizontal bar spanning both chiefs -->
+    <div style="display:flex;justify-content:center;padding:0 12%;">
+      <div class="hl" style="width:100%;"></div>
+    </div>
+
+    <!-- Two-column chiefs -->
+    <div class="chiefs-row">
+
+      <!-- ═══ COS: Josh ═══ -->
+      <div class="chief-col">
+        <div class="vl" style="height:0;"></div>
+        <div class="node n-chief" style="min-width:180px;">
+          <span class="nb">Chief of Staff</span>
+          <div class="nn">Josh Howard</div>
+        </div>
+
+        <!-- Directors under COS -->
+        <button class="tier-btn" onclick="toggleTier(this)">
+          <div class="tl"></div><span>Directors ▾</span><div class="tl"></div>
+        </button>
+        <div class="tier-content">
+          <div class="chief-to-dirs"></div>
+          <div class="dir-row">
+
+            <div class="dir-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-dir" style="min-width:130px;">
+                <span class="nb" style="color:#14532d;">Director</span>
+                <div class="nn">Marcus</div>
+                <div class="nt">Director of Operations</div>
+              </div>
+              <!-- Marcus PT reports -->
+              <div class="vl" style="height:12px;"></div>
+              <div style="position:relative;width:230px;"><div class="hl"></div></div>
+              <div class="row" style="gap:6px;">
+                <div class="col" style="align-items:center;">
+                  <div class="vl" style="height:10px;"></div>
+                  <div class="node n-pt" style="min-width:105px;"><span class="nb">PT · Ops</span><div class="nn" style="font-size:11px;">Naudra</div><div class="nt">Bus Driver</div></div>
+                </div>
+                <div class="col" style="align-items:center;">
+                  <div class="vl" style="height:10px;"></div>
+                  <div class="node n-pt" style="min-width:105px;"><span class="nb">PT · Ops</span><div class="nn" style="font-size:11px;">Ops Associates</div><div class="nt">Work-Study & BRYC-paid</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dir-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-dir" style="min-width:130px;">
+                <span class="nb" style="color:#14532d;">Director</span>
+                <div class="nn">Forrest</div>
+                <div class="nt">Director of Fellow Recruitment</div>
+              </div>
+            </div>
+
+            <div class="dir-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-dir" style="min-width:130px;">
+                <span class="nb" style="color:#14532d;">Director</span>
+                <div class="nn">Myeisha</div>
+                <div class="nt">Deputy Chief of Staff</div>
+              </div>
+            </div>
+
+          </div><!-- end dir-row COS -->
+        </div><!-- end directors tier -->
+
+        <!-- Managers under COS -->
+        <button class="tier-btn" onclick="toggleTier(this)" style="margin-top:16px;">
+          <div class="tl"></div><span>Managers ▾</span><div class="tl"></div>
+        </button>
+        <div class="tier-content">
+          <div style="position:relative;width:60%;margin:0 auto;"><div class="vl" style="height:16px;margin:0 auto;"></div><div class="hl"></div></div>
+          <div class="row" style="justify-content:center;gap:12px;align-items:flex-start;">
+
+            <div class="mgr-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-mgr" style="min-width:140px;">
+                <span class="nb">Manager</span>
+                <div class="nn">Angela</div>
+                <div class="nt">Community Engagement Manager</div>
+                <div class="nnt">Director-level scope; title under review</div>
+              </div>
+            </div>
+
+            <div class="mgr-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-mgr" style="min-width:140px;">
+                <span class="nb">Manager</span>
+                <div class="nn">Alexis</div>
+                <div class="nt">Persistence Manager</div>
+              </div>
+              <div class="vl" style="height:8px;"></div>
+              <div class="node n-hire" style="min-width:140px;"><span class="nb">Manager · TBD</span><div class="nn">Persistence Manager</div><div class="nt">Structure in progress</div></div>
+              <div class="vl" style="height:8px;"></div>
+              <div class="node n-alum" style="min-width:140px;"><span class="nb" style="color:#1e40af;">Stipend</span><div class="nn" style="font-size:11px;">Alumni Hub Leads</div><div class="nt">3–4 alums · monthly groups</div></div>
+            </div>
+
+          </div>
+        </div><!-- end managers tier COS -->
+
+        <!-- Peer leads note box -->
+        <div style="margin-top:20px;background:var(--gold-light);border:1px solid var(--gold);border-radius:6px;padding:10px 14px;font-size:11px;color:#713f12;text-align:center;max-width:340px;">
+          <strong style="display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;color:#92400e;">Peer Leads → COS (HR/Mgmt)</strong>
+          Chasity, Jakia & Rhonda bring HR/mgmt matters to Josh. Curriculum matters go to Elin.
+        </div>
+
+      </div><!-- end COS col -->
+
+      <!-- ═══ COP: Elin ═══ -->
+      <div class="chief-col">
+        <div class="node n-chief" style="min-width:180px;">
+          <span class="nb">Chief of Product</span>
+          <div class="nn">Elin</div>
+        </div>
+
+        <!-- Directors under COP -->
+        <button class="tier-btn" onclick="toggleTier(this)">
+          <div class="tl"></div><span>Directors ▾</span><div class="tl"></div>
+        </button>
+        <div class="tier-content">
+          <div class="chief-to-dirs"></div>
+          <div class="dir-row">
+
+            <div class="dir-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-dir" style="min-width:130px;">
+                <span class="nb" style="color:#14532d;">Director</span>
+                <div class="nn">Chasity</div>
+                <div class="nt">Director of Programs</div>
+                <div class="nnt">0 teaching nights</div>
+              </div>
+            </div>
+
+            <div class="dir-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-dir" style="min-width:130px;">
+                <span class="nb" style="color:#14532d;">Director</span>
+                <div class="nn">Aareena</div>
+                <div class="nt">Director of ACT</div>
+                <div class="nnt">1 ACT teaching night</div>
+              </div>
+            </div>
+
+            <div class="dir-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-dir" style="min-width:130px;">
+                <span class="nb" style="color:#14532d;">Director</span>
+                <div class="nn">Jakia</div>
+                <div class="nt">Director of Senior Counseling</div>
+              </div>
+            </div>
+
+            <div class="dir-entry">
+              <div class="vl" style="height:16px;"></div>
+              <div class="node n-dir" style="min-width:130px;">
+                <span class="nb" style="color:#14532d;">Director</span>
+                <div class="nn">Rhonda</div>
+                <div class="nt">Director of Advising</div>
+              </div>
+            </div>
+
+          </div><!-- end dir-row COP -->
+
+          <!-- Peer lead lines -->
+          <div style="margin-top:10px;display:flex;align-items:center;justify-content:center;width:80%;margin-left:auto;margin-right:auto;">
+            <div class="peer-chip">Chasity</div><div class="peer-dash"></div><div class="peer-word">PEER</div><div class="peer-dash"></div><div class="peer-chip">Aareena</div>
+            <div style="width:32px;"></div>
+            <div class="peer-chip">Jakia</div><div class="peer-dash"></div><div class="peer-word">PEER</div><div class="peer-dash"></div><div class="peer-chip">Rhonda</div>
+          </div>
+        </div><!-- end directors tier COP -->
+
+        <!-- Managers under COP -->
+        <button class="tier-btn" onclick="toggleTier(this)" style="margin-top:16px;">
+          <div class="tl"></div><span>Managers ▾</span><div class="tl"></div>
+        </button>
+        <div class="tier-content">
+          <div class="vl" style="height:16px;"></div>
+          <!-- Four sub-columns, one per director -->
+          <div class="row" style="width:100%;justify-content:space-between;align-items:flex-start;gap:8px;">
+
+            <!-- Under Chasity -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Under Chasity</div>
+              <div style="position:relative;width:95%;"><div class="hl"></div></div>
+              <div class="row" style="gap:5px;justify-content:center;align-items:flex-start;">
+                <div class="col" style="align-items:center;">
+                  <div class="vl" style="height:12px;"></div>
+                  <div class="node n-mgr" style="min-width:110px;"><span class="nb">Manager</span><div class="nn">Kendrick</div><div class="nt">8th Grade & Career Communities</div></div>
+                  <div class="vl" style="height:8px;"></div>
+                  <div style="position:relative;width:210px;"><div class="hl"></div></div>
+                  <div class="row" style="gap:4px;">
+                    <div class="col" style="align-items:center;"><div class="vl" style="height:8px;"></div><div class="node n-pt" style="min-width:90px;"><span class="nb">PT · Trigger</span><div class="nn" style="font-size:10px;">PT Learning Mgr</div></div></div>
+                    <div class="col" style="align-items:center;"><div class="vl" style="height:8px;"></div><div class="node n-pt" style="min-width:90px;"><span class="nb">PT · Subs</span><div class="nn" style="font-size:10px;">Sub Learning Mgrs</div><div class="nt">ACT + SRL trained</div></div></div>
+                  </div>
+                </div>
+                <div class="col" style="align-items:center;">
+                  <div class="vl" style="height:12px;"></div>
+                  <div class="node n-mgr" style="min-width:110px;"><span class="nb">Manager</span><div class="nn">Lauren</div><div class="nt">11th Grade · Health Fellows</div><div class="teach">ACT + SRL</div></div>
+                </div>
+                <div class="col" style="align-items:center;">
+                  <div class="vl" style="height:12px;"></div>
+                  <div class="node n-hire" style="min-width:110px;"><span class="nb">Manager · Hire</span><div class="nn">New FT Hire</div><div class="nt">9/10th Grade · 4 nights</div><div class="teach">ACT + SRL</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Under Aareena -->
+            <div style="flex:0 0 90px;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Aareena</div>
+              <div style="font-size:10px;color:var(--gray-400);font-style:italic;text-align:center;">No direct reports</div>
+            </div>
+
+            <!-- Under Jakia -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Under Jakia</div>
+              <div style="position:relative;width:95%;"><div class="hl"></div></div>
+              <div class="row" style="gap:5px;justify-content:center;align-items:flex-start;">
+                <div class="col" style="align-items:center;"><div class="vl" style="height:12px;"></div><div class="node n-mgr" style="min-width:100px;"><span class="nb">Manager</span><div class="nn">Rachel</div><div class="nt">Sr. Counselor (Writing Lead)</div></div></div>
+                <div class="col" style="align-items:center;"><div class="vl" style="height:12px;"></div><div class="node n-mgr" style="min-width:100px;"><span class="nb">Manager</span><div class="nn">Mychell</div><div class="nt">Senior Counselor</div></div></div>
+                <div class="col" style="align-items:center;"><div class="vl" style="height:12px;"></div><div class="node n-mgr" style="min-width:100px;"><span class="nb">Manager</span><div class="nn">Tim</div><div class="nt">Senior Counselor</div></div></div>
+              </div>
+            </div>
+
+            <!-- Under Rhonda -->
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Under Rhonda</div>
+              <div style="position:relative;width:95%;"><div class="hl"></div></div>
+              <div class="row" style="gap:5px;justify-content:center;align-items:flex-start;">
+                <div class="col" style="align-items:center;">
+                  <div class="vl" style="height:12px;"></div>
+                  <div class="node n-mgr" style="min-width:95px;"><span class="nb">Manager</span><div class="nn">Tavidee</div><div class="nt">Advisor</div></div>
+                  <div class="vl" style="height:6px;"></div>
+                  <div class="node n-pt" style="min-width:95px;"><span class="nb">PT</span><div class="nn" style="font-size:10px;">Alumni Advisors</div><div class="nt">1–2 positions</div></div>
+                </div>
+                <div class="col" style="align-items:center;"><div class="vl" style="height:12px;"></div><div class="node n-mgr" style="min-width:95px;"><span class="nb">Manager</span><div class="nn">Richard</div><div class="nt">Advisor</div></div></div>
+                <div class="col" style="align-items:center;"><div class="vl" style="height:12px;"></div><div class="node n-mgr" style="min-width:95px;"><span class="nb">Manager</span><div class="nn">Kirsten</div><div class="nt">Advisor</div><div class="teach">+ 1 ACT night</div></div></div>
+                <div class="col" style="align-items:center;"><div class="vl" style="height:12px;"></div><div class="node n-hire" style="min-width:95px;"><span class="nb">Optional</span><div class="nn">Ni'Ja</div><div class="nt">Advisor + RAM Support</div></div></div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- end managers tier COP -->
+
+      </div><!-- end COP col -->
+
+    </div><!-- end chiefs-row -->
+  </div><!-- end chart -->
+
+  <!-- NOTES SECTION — categorized -->
+  <div class="section-wrap">
+    <button class="section-header-btn" onclick="toggleSection(this)">
+      <div class="sh-left"><div class="sh-title">Notes</div><div class="sh-sub">Staffing context, peer lead rationale, title considerations</div></div>
+      <span class="sh-arrow">▾</span>
+    </button>
+    <div class="section-body">
+
+    <div class="notes-group">
+      <div class="notes-group-title">Needs Additional Support</div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>Forrest:</strong> Dedicated support staff TBD — as recruiting targets scale toward 415, Forrest will need operational capacity to manage outreach, applications, and intake without absorbing admin burden that limits his strategic work.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>Angela:</strong> Additional supplementary support needed — the scope of volunteer recruitment, admissions, matriculation, Fellow appreciation, and training across a growing program is beyond a single person. Structure of that support (PT role, intern, OA assignment) TBD.</div>
+      </div>
+    </div>
+
+    <div class="notes-group">
+      <div class="notes-group-title">Peer Leads</div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>COS (HR/Mgmt items):</strong> Chasity, Jakia, and Rhonda bring HR and management matters to Josh. Curriculum matters go to Elin. This reporting structure may evolve over time as the organization grows.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>Relationships:</strong> Chasity ↔ Aareena share ownership of the 10th–11th grade Fellow experience. Jakia ↔ Rhonda have significant overlap serving seniors through counseling and advising. These are lateral, collaborative relationships — not reporting lines.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div>
+          <strong>Why this works:</strong> Research on shared and peer leadership consistently shows that lateral structures outperform traditional top-down models in environments requiring cross-functional coordination. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10813210/" target="_blank" style="color:var(--green);">Studies on peer leadership behaviors</a> find that when colleagues lead horizontally — sharing accountability, providing mutual feedback, and surfacing problems early — teams produce more sustainable outcomes than those dependent on vertical escalation alone. <a href="https://www.regent.edu/journal/emerging-leadership-journeys/shared-leadership-is-it-time-for-a-change/" target="_blank" style="color:var(--green);">Research on shared leadership in top management teams</a> shows that distributing leadership across peers, rather than concentrating it in a single authority, improves both decision quality and team cohesion — particularly in organizations where different domains (curriculum, HR, programs) require different kinds of expertise.
+          <br><br>
+          Jay Galbraith's work on matrix organizations provides the structural framing: this model works when the two "matrix managers" (Josh and Elin) are in constant alignment. The peer check-ins between director pairs are the horizontal glue — they resolve roughly 80% of overlaps themselves, escalating only the remaining 20% (management issues to Josh, curriculum issues to Elin). This also enables dynamic resource allocation: if the advising team is overwhelmed with college application deadlines, the learning team — through their peer check-in — can adjust curriculum timing to support the same cohort of seniors, with Elin's blessing, without requiring a full leadership meeting to make it happen.
+        </div>
+      </div>
+    </div>
+
+    <div class="notes-group">
+      <div class="notes-group-title">Titles & Promotion Notes</div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>Title level review:</strong> The question of Director vs. Chief for any role will be evaluated in partnership with all of BRYC leadership — not as a performance reward, but based on organizational scope and need.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>Angela</strong> operates across a major organizational footprint — volunteer recruitment, admissions, matriculation, Fellow appreciation, and training. She is paid in the director salary range and operates at that level. She is still relatively early in her career, and the right title and trajectory is something leadership needs to actively grapple with and determine — not as a bureaucratic exercise, but as a meaningful investment in her growth.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-dot" style="background:var(--gray-300);"></div>
+        <div><strong style="color:var(--black);">Chasity:</strong> Has been stepping up and owning more organizational responsibility over months of intentional, documented conversations with leadership. She is game — and has shown actionable steps and characteristics that signal readiness. While she remains at the director level, her expectations will operate at a chief level going forward. To fully recognize and sustain that growth, she needs to continue exiting day-to-day IFS duties and facilitation. She has already been taking steps in this direction — working with Jakia, Angela, and other PMs toward codifying IFS standards. Angela has done parallel work with the mentor program. The path forward is building on that momentum.</div>
+      </div>
+    </div>
+
+    <div class="notes-group">
+      <div class="notes-group-title">Other</div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>Operations Associates</strong> report to Marcus and serve two tracks. BRYC-paid OAs take on traditional operations responsibilities plus additional duties that may include driving the van, supporting childcare, or music production (as Ivory did this year). Work-study OAs fulfill the traditional operations role and additionally serve as Fellow mentors.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-dot"></div>
+        <div><strong>Ni'Ja</strong> is shown as optional under Rhonda. Depending on BRYC's advising needs, she could serve there and additionally provide RAM support. Based on current conversations, she is not expected to prefer working at BRYC's physical locations — her role, if any, would likely be structured accordingly.</div>
+      </div>
+    </div>
+  </div><!-- end notes section-body -->
+  </div><!-- end notes section-wrap -->
+
+  <!-- STAFF PIPELINE -->
+  <div class="section-wrap">
+    <button class="section-header-btn" onclick="toggleSection(this)">
+      <div class="sh-left"><div class="sh-title">Staff Pipeline</div><div class="sh-sub">Candidates worth tracking · Positions to fill by August · Conversations needed</div></div>
+      <span class="sh-arrow">▾</span>
+    </button>
+    <div class="section-body">
+
+    <!-- HIRING PRIORITIES DROPDOWN -->
+    <div style="margin-bottom:24px;">
+      <button onclick="toggleHiring(this)" style="width:100%;background:var(--blue-100);border:1px solid #93c5fd;border-radius:8px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'DM Sans',sans-serif;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-800);">Positions to Fill by August</span>
+          <span style="font-size:12px;color:#1d4ed8;">5 roles</span>
+        </div>
+        <span id="hiring-arrow" style="color:var(--blue-800);font-size:16px;">▾</span>
+      </button>
+      <div id="hiring-content" style="display:none;border:1px solid #93c5fd;border-top:none;border-radius:0 0 8px 8px;background:white;padding:20px 24px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--blue-100);border-radius:6px;">
+            <div style="background:#1d4ed8;color:white;border-radius:4px;font-size:9px;font-weight:700;padding:2px 7px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;margin-top:1px;">FT</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--black);">Learning Manager</div>
+              <div style="font-size:12px;color:var(--gray-600);margin-top:2px;">9th–10th Grade · 4 nights · SRL + ACT trained</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:#eff6ff;border-radius:6px;border:1px dashed #93c5fd;">
+            <div style="background:#93c5fd;color:#1e3a8a;border-radius:4px;font-size:9px;font-weight:700;padding:2px 7px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;margin-top:1px;">PT</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--black);">Learning Manager Subs</div>
+              <div style="font-size:12px;color:var(--gray-600);margin-top:2px;">ACT + SRL trained · on-call coverage</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:#eff6ff;border-radius:6px;border:1px dashed #93c5fd;">
+            <div style="background:#93c5fd;color:#1e3a8a;border-radius:4px;font-size:9px;font-weight:700;padding:2px 7px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;margin-top:1px;">PT</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--black);">Alumni Advisors</div>
+              <div style="font-size:12px;color:var(--gray-600);margin-top:2px;">1–2 positions · could be managed by Tavidee</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:#eff6ff;border-radius:6px;border:1px dashed #93c5fd;">
+            <div style="background:#93c5fd;color:#1e3a8a;border-radius:4px;font-size:9px;font-weight:700;padding:2px 7px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;margin-top:1px;">PT</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--black);">Operations Associates</div>
+              <div style="font-size:12px;color:var(--gray-600);margin-top:2px;">Includes work-study students. Need: one who can provide childcare for team's kids · one who can drive the van · one who can serve as music production manager</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:#eff6ff;border-radius:6px;border:1px dashed #93c5fd;">
+            <div style="background:#93c5fd;color:#1e3a8a;border-radius:4px;font-size:9px;font-weight:700;padding:2px 7px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;margin-top:1px;">Stipend</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--black);">Alumni Hub Leads</div>
+              <div style="font-size:12px;color:var(--gray-600);margin-top:2px;">3–4 committed alums · monthly small groups</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONVERSATIONS TO HAVE -->
+    <div style="margin-bottom:24px;background:#fff7ed;border:1px solid #fdba74;border-radius:8px;padding:16px 20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c2410c;margin-bottom:10px;">Conversations to Have</div>
+      <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--gray-600);line-height:1.6;">
+        <div style="background:#c2410c;color:white;border-radius:4px;font-size:9px;font-weight:700;padding:2px 7px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;margin-top:2px;">ISACT Team</div>
+        <div>Aareena, Ni'Ja, and Kirsten — conversation needed about roles, expectations, and structure for the 2026–2027 year given the current ISACT status. All three have ties to in-school programming and need clarity on what their roles look like in Scenario 1.</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:48px;">
+
+      <div style="border-radius:10px;overflow:hidden;border:1px solid var(--gray-200);">
+        <div style="background:var(--green);padding:18px 20px 14px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;">Learning Team</div>
+          <div style="font-size:20px;font-weight:700;color:white;">Nia Karriem</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;">Potential: Learning Manager</div>
+        </div>
+        <div style="padding:16px 20px 20px;background:white;">
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Background</div><div class="rdim-text">Currently at Istrouma, TFA second year. Named Middle School Teacher of the Year. Strong classroom instincts, early career, mission-aligned. A BRYC salary would be a meaningful step up from TFA compensation. Recommended by Allie.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Fit</div><div class="rdim-text">Natural candidate for a Learning Manager role — high facilitation ceiling, likely comfortable with BRYC's culture model. Would benefit from Kendrick's instructional coaching from day one.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Timing</div><div class="rdim-text">Could be the New FT Hire, or a strong candidate for a future opening as the team grows.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Next Step</div><div class="rdim-text">Chasity will reach out.</div></div>
+        </div>
+      </div>
+
+      <div style="border-radius:10px;overflow:hidden;border:1px solid var(--gray-200);">
+        <div style="background:var(--green);padding:18px 20px 14px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;">Persistence or Advising</div>
+          <div style="font-size:20px;font-weight:700;color:white;">Natalie Robertson</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;">Potential: Advisor or Persistence Manager</div>
+        </div>
+        <div style="padding:16px 20px 20px;background:white;">
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Background</div><div class="rdim-text">Assistant General Counsel at LSU. Independently helps students with private college counseling. Strong analytical mind, legal and advising background.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Fit</div><div class="rdim-text">Relevant expertise for Advising or Persistence — particularly the career-guidance and financial-aid complexity that more advanced alumni navigate. Could add significant depth to either team.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Timing</div><div class="rdim-text">Not an immediate hire — but worth keeping warm. Right role could emerge as Persistence structure is finalized or Advising expands.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Open Question</div><div class="rdim-text">Compensation expectations likely exceed current band. That conversation needs to happen early and honestly before any formal process begins.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--green);">Next Step</div><div class="rdim-text">Josh will reach out once there is more clarity on the Persistence structure or other potential openings.</div></div>
+        </div>
+      </div>
+
+      <div style="border-radius:10px;overflow:hidden;border:2px solid var(--gold);">
+        <div style="background:var(--gold-light);padding:18px 20px 14px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#92400e;margin-bottom:6px;">Senior Counseling / Advising / Research</div>
+          <div style="font-size:20px;font-weight:700;color:var(--black);">John Belmontez</div>
+          <div style="font-size:12px;color:#92400e;margin-top:4px;">Potential: TBD — requires intentional scoping</div>
+        </div>
+        <div style="padding:16px 20px 20px;background:white;">
+          <div class="rdim"><div class="rdim-name" style="color:var(--gold);">Background</div><div class="rdim-text">Left BRYC in 2023 as Associate Director of College Counseling. Has since led a college-access nonprofit within the University of California system. Recently signaled to Lucas a desire to return to Baton Rouge and to BRYC.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--gold);">Potential Focus</div><div class="rdim-text">Deep interest in research — what makes a BRYC Fellow, where they grow, what outcomes they achieve. Could contribute meaningfully to senior counseling, advising, or a research/data function that doesn't currently have a clear home.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--gold);">Timing</div><div class="rdim-text">Actively interested in returning. Timing is real — not speculative. How and when BRYC engages matters.</div></div>
+          <div class="rdim"><div class="rdim-name" style="color:var(--gold);">Open Question</div><div class="rdim-text">John was once an Associate Director while Jakia was a counselor. Any role he steps into needs to be scoped carefully to avoid ambiguity in the reporting structure and to ensure Jakia's authority over the senior counseling function is not undermined. The right answer may be a role adjacent to — rather than inside — Jakia's team, potentially focused on research and cross-functional advising strategy.</div></div>
+        </div>
+      </div>
+
+      <!-- Brei -->
+      <div style="border-radius:10px;overflow:hidden;border:1px solid var(--gray-200);">
+        <div style="background:var(--gray-800,#1f2937);padding:18px 20px 14px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px;">Learning Team · Returning Staff</div>
+          <div style="font-size:20px;font-weight:700;color:white;">Brei</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">If/When Returns · Out most of fall (due Sept.)</div>
+        </div>
+        <div style="padding:16px 20px 20px;background:white;">
+          <div class="rdim">
+            <div class="rdim-name" style="color:var(--gray-500);">Current Status</div>
+            <div class="rdim-text">Currently working part-time. Due in September. Has spoken with Lucas multiple times about returning full-time. Josh spoke with her a couple weeks ago — she is leaning toward staying in the classroom but will listen to an offer. Chasity wants her back, but has been clear that Brei would need to be committed to the role.</div>
+          </div>
+          <div class="rdim">
+            <div class="rdim-name" style="color:var(--gray-500);">Availability</div>
+            <div class="rdim-text">Due in September — would be out for most of the fall semester if she returns FT. Any offer needs to be built around a spring ramp-in. Fall should be treated as unavailable for planning purposes.</div>
+          </div>
+          <div class="rdim">
+            <div class="rdim-name" style="color:var(--gray-500);">Proposed Role</div>
+            <div class="rdim-text">Instructional coaching, one facilitation night per week upon return, and RAM support. If Brei returns, she would own the instructional coaching function — Kendrick and Chasity would step back from that role and leave it to her. She brings a distinct lens (curriculum internalization, instructional technique) that complements the team.</div>
+          </div>
+          <div class="rdim">
+            <div class="rdim-name" style="color:var(--gray-500);">The Question</div>
+            <div class="rdim-text">Two-sided: does BRYC want her back, and does she want to return? Chasity is supportive but commitment is the non-negotiable. Josh and Chasity are the right people to have the conversation and make the offer.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- end staff pipeline section-body -->
+  </div><!-- end staff pipeline section-wrap -->
+
+  <!-- PERSISTENCE -->
+  <div class="section-wrap">
+    <button class="section-header-btn" onclick="toggleSection(this)">
+      <div class="sh-left"><div class="sh-title">Persistence: Context & Direction</div><div class="sh-sub">PY26 engagement data · model direction · alumni priorities</div></div>
+      <span class="sh-arrow">▾</span>
+    </button>
+    <div class="section-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
+
+      <div style="border-radius:10px;overflow:hidden;border:1px solid var(--gray-200);">
+        <div style="background:#4c1d95;padding:16px 20px 12px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px;">PY26 Engagement Data</div>
+          <div style="font-size:14px;font-weight:600;color:white;">Current touchpoint snapshot</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;">Data in progress — not yet complete</div>
+        </div>
+        <div style="padding:16px 20px 20px;background:white;">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;">
+            <thead><tr>
+              <th style="text-align:left;padding:6px 0;border-bottom:2px solid var(--gray-200);color:var(--gray-500);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:10px;">Area</th>
+              <th style="text-align:center;padding:6px 8px;border-bottom:2px solid var(--gray-200);color:var(--gray-500);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:10px;">Touchpoints</th>
+              <th style="text-align:center;padding:6px 0;border-bottom:2px solid var(--gray-200);color:var(--gray-500);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:10px;">Unique Fellows</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:8px 0;color:var(--black);font-weight:500;">Career Services</td><td style="padding:8px;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">136</td><td style="padding:8px 0;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">63</td></tr>
+              <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:8px 0;color:var(--black);font-weight:500;">Persistence — Freshmen</td><td style="padding:8px;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">190</td><td style="padding:8px 0;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">86</td></tr>
+              <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:8px 0;color:var(--black);font-weight:500;">Persistence — Soph/Senior</td><td style="padding:8px;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">306</td><td style="padding:8px 0;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">150</td></tr>
+              <tr><td style="padding:8px 0;color:var(--black);font-weight:500;">Persistence — Graduated Alumni</td><td style="padding:8px;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">134</td><td style="padding:8px 0;text-align:center;font-family:'DM Mono',monospace;color:var(--green);font-weight:600;">78</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--gray-100);">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Alumni Context</div>
+            <div style="font-size:12px;color:var(--gray-600);line-height:1.65;">BRYC currently has <strong>920 alumni</strong>, with ~134 graduating seniors joining in May. The team prioritizes Fellows within their first two years post-graduation — the most vulnerable window for summer melt and second-fall drop-off. That cohort currently totals <strong>253 students</strong>. The broader alumni base spans all years, though most active engagement is concentrated in the most recent graduating classes.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="border-radius:8px;border:1px solid var(--gray-200);padding:16px 20px;background:white;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">What Alumni Actually Want</div>
+          <div style="font-size:13px;color:var(--gray-600);line-height:1.65;">Alumni want to be able to access BRYC and get support when they need it. Formal programs like SHRM or Exxon are valued additions, but they are not what alumni are clamoring for. The core ask is simpler: be reachable, be responsive, and be real. Direct aid (basic needs, emergency support) and mentoring connections are the two areas of growing demand.</div>
+        </div>
+        <div style="border-radius:8px;border:1px solid var(--gray-200);padding:16px 20px;background:white;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Model Direction</div>
+          <div style="font-size:13px;color:var(--gray-600);line-height:1.65;">Leaning toward a <strong>peer-to-peer, small group hub model</strong> — committed alumni leaders facilitate monthly gatherings (career + community focus) with 8–10 regular attendees, compensated via stipend. This removes the burden from managers to create and run everything, freeing capacity for high-need individual cases. See <a href="https://braven.org/" target="_blank" style="color:var(--green);">Braven</a> as a comparable model worth studying.</div>
+        </div>
+        <div style="border-radius:8px;border:1px solid var(--gray-200);padding:16px 20px;background:white;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Additional Priorities</div>
+          <div style="font-size:13px;color:var(--gray-600);line-height:1.65;"><strong>Institutional relationships:</strong> Someone should own deep, ongoing connections with colleges (admissions, registrars, student affairs) and corporations (career connections, opportunities) — not transactional, but sustained partnerships.<br><br><strong>Persistence 101:</strong> The Persistence team facilitates this postsecondary next-steps program in spring for Senior Fellows, taking the place of Program B in their weekly schedule. This is a key bridge between the learning team and Persistence.<br><br><strong>Principle:</strong> BRYC doesn't need to do too much — but it shouldn't be purely reactive. The goal is a lightweight, scalable model that meets alumni where they are and keeps the door open.</div>
+        </div>
+      </div>
+    </div>
+    </div><!-- end persistence section-body -->
+  </div><!-- end persistence section-wrap -->
+
+  <!-- ROLE RUBRIC -->
+  <div class="section-wrap">
+    <button class="section-header-btn" onclick="toggleSection(this)">
+      <div class="sh-left"><div class="sh-title">Role Level Definitions</div><div class="sh-sub">What it means to be a Manager, Director, or Chief at BRYC</div></div>
+      <span class="sh-arrow">▾</span>
+    </button>
+    <div class="section-body">
+    <div class="rubric-grid">
+      <div class="rc mgr">
+        <div class="rc-head"><div class="lvlbdg">Level 1</div><h3>Manager</h3><div class="rng">$35K–$60K</div></div>
+        <div class="rc-body">
+          <div class="rdim"><div class="rdim-name">Scope</div><div class="rdim-text">Executes at a high level within a defined purview. Willing and able to lead on opportunities to deepen that purview. Contributes to strategic planning efforts.</div></div>
+          <div class="rdim"><div class="rdim-name">Self-Direction</div><div class="rdim-text">Mostly self-directed within their lane, with frequent (weekly or more) coaching and high-touch management. Proactively raises issues — sometimes with solutions, sometimes not.</div></div>
+          <div class="rdim"><div class="rdim-name">Planning Horizon</div><div class="rdim-text">Weekly. Drives planning of their own duties with guidance from team meetings and supervisor check-ins.</div></div>
+          <div class="rdim"><div class="rdim-name">Culture</div><div class="rdim-text">High commitment to professionalism and maturity. Actively develops through multiple coaching conversations per year around BRYC's core values.</div></div>
+          <div class="rdim"><div class="rdim-name">Winning Habits</div><div class="rdim-text">Executes the weekly plan and adjusts as needed. Takes detailed notes. Proactively keeps director updated. Identifies problems and brings solutions.</div></div>
+        </div>
+      </div>
+      <div class="rc dir">
+        <div class="rc-head"><div class="lvlbdg">Level 2</div><h3>Director</h3><div class="rng">$60K–$80K</div></div>
+        <div class="rc-body">
+          <div class="rdim"><div class="rdim-name">Scope</div><div class="rdim-text">Content command and leadership credibility to manage one or more teams. Responsible for crafting a strategic vision, building necessary infrastructure, and driving execution.</div></div>
+          <div class="rdim"><div class="rdim-name">Self-Direction</div><div class="rdim-text">Completely self-directed with relatively infrequent, high-level coaching. Drives team-wide execution. Brings potential answers to almost all questions to their supervisor.</div></div>
+          <div class="rdim"><div class="rdim-name">Planning Horizon</div><div class="rdim-text">Semesterly. Sets tone, communicates vision, delegates to managers, and provides appropriately detailed guidance and coaching to direct reports.</div></div>
+          <div class="rdim"><div class="rdim-name">Culture</div><div class="rdim-text">Consummate professional and sterling BRYC representative — internally and externally. Consistently exemplifies BRYC's core values at the highest level.</div></div>
+          <div class="rdim"><div class="rdim-name">Winning Habits</div><div class="rdim-text">Leads meetings; sends WWW recaps. Holds direct reports accountable to communication standards. Proactively harvests resources and builds systems for their team.</div></div>
+        </div>
+      </div>
+      <div class="rc ch">
+        <div class="rc-head"><div class="lvlbdg">Level 3</div><h3>Chief</h3><div class="rng">$80K+</div></div>
+        <div class="rc-body">
+          <div class="rdim"><div class="rdim-name">Scope</div><div class="rdim-text">Organizational-level accountability. Sets and enforces the vision across multiple teams and functions. Directly responsible for a domain of BRYC's mission — and for the people executing it.</div></div>
+          <div class="rdim"><div class="rdim-name">Self-Direction</div><div class="rdim-text">Fully self-directed. Coaches and thought-partners with directors so they and their teams are positioned to win. Reserves direct execution for areas of personal ownership.</div></div>
+          <div class="rdim"><div class="rdim-name">Planning Horizon</div><div class="rdim-text">Annual. Sets and enforces OKRAs across the organization. Ensures all involved teammates are clear on what winning looks like — and holds that standard.</div></div>
+          <div class="rdim"><div class="rdim-name">Culture</div><div class="rdim-text">Upholds and enforces BRYC's cultural standard across the organization. Regularly engages with Fellows, Guardians, and Mentors to hold the customer service standard personally.</div></div>
+          <div class="rdim"><div class="rdim-name">Winning Habits</div><div class="rdim-text">Enforces post-effort follow-up across the org. Proactively harvests resources and builds org-wide systems. Holds directors accountable to communication and planning standards.</div></div>
+        </div>
+      </div>
+    </div>
+    </div><!-- end rubric section-body -->
+  </div><!-- end rubric section-wrap -->
+
+  <!-- PROFESSIONAL DEVELOPMENT -->
+  <div class="section-wrap">
+    <button class="section-header-btn" onclick="toggleSection(this)">
+      <div class="sh-left"><div class="sh-title">Professional Development & Intentional Coaching</div><div class="sh-sub">How the team is growing — individual coaching, cohort programs, and external opportunities</div></div>
+      <span class="sh-arrow">▾</span>
+    </button>
+    <div class="section-body">
+
+      <!-- Intro -->
+      <div style="font-size:14px;color:var(--gray-600);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--gray-100);">
+        BRYC's investment in its people is intentional, documented, and ongoing. Every director has received a carefully developed coaching plan. The full director cohort is learning together, advancing professionally, and actively building toward expanded leadership. Below is a snapshot of where each person is and what they're working toward.
+      </div>
+
+      <!-- Cohort Programs -->
+      <div style="margin-bottom:28px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Cohort & Organizational Programs</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:16px 18px;background:var(--gray-50);">
+            <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:4px;">Director Coaching Plans</div>
+            <div style="font-size:12px;color:var(--gray-600);line-height:1.6;">Every director received a rich, carefully thought-out individual coaching plan this year. These plans are grounded in self-leadership frameworks and are tied directly to organizational priorities and each person's professional growth edge.</div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:16px 18px;background:var(--gray-50);">
+            <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:4px;">Monthly Director Meetings</div>
+            <div style="font-size:12px;color:var(--gray-600);line-height:1.6;">All directors are learning together and enjoying monthly cohort meetings covering <em>The Making of a Manager</em>, common leadership challenges, and exploration of AI tools for their roles. Feedback from the group has been consistently positive.</div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--green);padding:16px 18px;background:#f0fdf4;">
+            <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:4px;">Investing In Leaders (IIL) Program</div>
+            <div style="font-size:12px;color:var(--gray-600);line-height:1.6;">
+              Participants: <strong>Chasity, Aareena, Jakia, Rhonda, Forrest, Marcus, Myeisha</strong>. Project managed by Myeisha. Going well.<br><br>
+              A key component of IIL requires each director to create a coaching plan with a direct report (or in Angela's case, a peer). This is building a culture of intentional development at the manager level that mirrors what leadership has built at the director level.
+            </div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:16px 18px;background:var(--gray-50);">
+            <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:4px;">Claude AI Bootcamp</div>
+            <div style="font-size:12px;color:var(--gray-600);line-height:1.6;"><strong>Tavidee</strong> is currently participating in a Claude Bootcamp alongside other BRYC team members — an early signal of the team's willingness to engage seriously with AI as a professional tool.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Individual highlights -->
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Individual Highlights</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:14px 16px;background:white;">
+            <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:3px;">Chasity</div>
+            <div style="font-size:11px;color:var(--gray-600);line-height:1.6;">Exploring Metromorphosis's ULDI program and other leadership development offerings to support her growth into expanded organizational leadership.</div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:14px 16px;background:white;">
+            <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:3px;">Jakia</div>
+            <div style="font-size:11px;color:var(--gray-600);line-height:1.6;">Actively involved with SACAC (Southern Association for College Admission Counseling), deepening her professional network and staying current in the college counseling field.</div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:14px 16px;background:white;">
+            <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:3px;">Forrest</div>
+            <div style="font-size:11px;color:var(--gray-600);line-height:1.6;">Active SHRM member and currently enrolled in school — demonstrating sustained investment in his own professional development.</div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:14px 16px;background:white;">
+            <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:3px;">Marcus</div>
+            <div style="font-size:11px;color:var(--gray-600);line-height:1.6;">Holds a leadership position on BRAYN's advisory board and is a consistent representative of BRYC in the community.</div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:14px 16px;background:white;">
+            <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:3px;">Myeisha</div>
+            <div style="font-size:11px;color:var(--gray-600);line-height:1.6;">Also on BRAYN's advisory board. Growing and deepening her interest in community forums and civic engagement as extensions of her organizational leadership.</div>
+          </div>
+
+          <div style="border-radius:8px;border:1px solid var(--gray-200);padding:14px 16px;background:white;">
+            <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:3px;">Aareena</div>
+            <div style="font-size:11px;color:var(--gray-600);line-height:1.6;">Attended the local ACT Conference with Kirsten, Ni'Ja, and Lauren. Followed up with multiple post-conference meetings — translating attendance into action.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BRYC-Sponsored PD -->
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--gray-100);">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">BRYC-Sponsored PD Opportunities</div>
+        <div style="font-size:13px;color:var(--gray-500);margin-bottom:12px;font-style:italic;">Nearly every team member has been invited to or attended a BRYC-sponsored professional development opportunity this year.</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+
+          <div style="display:flex;gap:14px;padding:14px 16px;border-radius:8px;background:var(--gray-50);border:1px solid var(--gray-200);">
+            <div style="font-size:11px;font-weight:700;color:white;background:var(--green);border-radius:4px;padding:2px 8px;white-space:nowrap;height:fit-content;margin-top:1px;">Conference</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--black);margin-bottom:2px;">Kendrick & Marcus — Community Orgs Conference (Texas)</div>
+              <div style="font-size:12px;color:var(--gray-600);">Prepped to speak at a conference about community organizations. Representing BRYC externally while developing their own voice as practitioners.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;padding:14px 16px;border-radius:8px;background:var(--gray-50);border:1px solid var(--gray-200);">
+            <div style="font-size:11px;font-weight:700;color:white;background:var(--green);border-radius:4px;padding:2px 8px;white-space:nowrap;height:fit-content;margin-top:1px;">Event</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--black);margin-bottom:2px;">Lauren, Richard, Ni'Ja, Mychell & Tim — Leaders Breakfast at Healing Place</div>
+              <div style="font-size:12px;color:var(--gray-600);">Attended and came back to lead the BRYC team through their key takeaways. More than one team member called it very impactful. A model for how PD ripples through the organization.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;padding:14px 16px;border-radius:8px;background:var(--gray-50);border:1px solid var(--gray-200);">
+            <div style="font-size:11px;font-weight:700;color:white;background:var(--green);border-radius:4px;padding:2px 8px;white-space:nowrap;height:fit-content;margin-top:1px;">Conference</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--black);margin-bottom:2px;">Aareena, Kirsten, Ni'Ja & Lauren — Local ACT Conference</div>
+              <div style="font-size:12px;color:var(--gray-600);">Attended together. Aareena followed up with multiple post-conference meetings, translating the experience into direct action for BRYC's ACT programming.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- end PD section-body -->
+  </div><!-- end PD section-wrap -->
+
+</div>
+<script>
+function toggleTier(btn){const content=btn.nextElementSibling;const label=btn.querySelector('span');const isOpen=content.style.display!=='none';if(isOpen){content.style.display='none';label.textContent=label.textContent.replace('▾','▸');}else{content.style.display='block';label.textContent=label.textContent.replace('▸','▾');}}
+function toggleHiring(btn){const content=document.getElementById('hiring-content');const arrow=document.getElementById('hiring-arrow');const isOpen=content.style.display!=='none';content.style.display=isOpen?'none':'block';arrow.textContent=isOpen?'▾':'▴';}
+function toggleSection(btn){const body=btn.nextElementSibling;const isOpen=body.classList.contains('open');body.classList.toggle('open',!isOpen);btn.classList.toggle('open',!isOpen);}
+</script>
+</body>
+</html>
